@@ -1,3 +1,51 @@
+import mainView from './views/mainview.js';
+import controlView from './views/controlview.js';
+import gameView from './views/gameview.js';
+
+import GameBrain from './model/gamebrain.js';
+import GameController from './controllers/game-controller.js';
+import StatisticsController from './controllers/statistics-controller.js';
+
+
+let brain = new GameBrain();
+let game_view = gameView();
+let gameController = new GameController(brain, game_view);
+let statisticsController = new StatisticsController(brain, game_view);
+
+let view = mainView();
+document.body.append(view);
+let ctrl_view = controlView(gameControlClick);
+view.append(ctrl_view);
+view.append(game_view);
+
+function gameControlClick(e) {
+    console.log(e);
+    let v;
+    switch (e.target.id) {
+        case 'game':
+            statisticsController.stop();
+            gameController.run();
+            break;
+        case 'statistics':
+            gameController.stop();
+            statisticsController.run();
+            break;
+
+        default:
+            break;
+    }
+}
+
+statisticsController.run();
+
+
+window.addEventListener('resize', () => {
+    gameController.resizeUi();
+    statisticsController.resizeUi();
+});
+
+
+/*
 console.log("FlappyBird");
 
 
@@ -7,7 +55,7 @@ function animate(rowIndex){
         let colIn = COL_COUNT;
 
         let pathPosition = Number(content.lastElementChild.lastElementChild.dataset.pathPosition);
-        console.log(content.lastElementChild.lastElementChild);
+        //console.log(content.lastElementChild.lastElementChild);
         let pathChange = Math.random() * (PATH_WIDTH - 3);
         pathChange = Math.ceil((Math.random() * 2 - 1.5)) * pathChange;
         if(pathPosition + pathChange + PATH_WIDTH >= ROW_COUNT || pathPosition + pathChange < 1){
@@ -116,3 +164,4 @@ document.body.append(content);
 
 let rowIndex = 100;
 animate(rowIndex);
+*/
