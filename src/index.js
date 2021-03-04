@@ -10,7 +10,12 @@ function animate(rowIndex){
         console.log(content.lastElementChild.lastElementChild);
         let pathChange = Math.random() * (PATH_WIDTH - 3);
         pathChange = Math.ceil((Math.random() * 2 - 1.5)) * pathChange;
-        pathPosition = pathPosition + pathChange;
+        if(pathPosition + pathChange + PATH_WIDTH >= ROW_COUNT || pathPosition + pathChange < 1){
+            pathPosition = pathPosition;
+        }else{
+            pathPosition = pathPosition + pathChange;
+        }
+        
         
 
         for (let index = 0; index < ROW_COUNT; index++) {
