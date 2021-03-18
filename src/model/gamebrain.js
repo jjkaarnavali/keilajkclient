@@ -68,4 +68,6 @@ export default class GameBrain {
 
     gameCellPath() { return gameCellPath; }
     gameCellNotPath() { return gameCellNotPath; }
+
+    
 }

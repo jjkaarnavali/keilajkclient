@@ -9,7 +9,19 @@ function animate(rowIndex, content, colCount){
         let rowHeight = viewPortHeight / 20;
         let colWidth = window.innerWidth / colCount;
 
+        
+
+        
+        let birdPosition = Math.round(rowCount / 2) - 2;
+
+        if (content.lastElementChild.lastElementChild.dataset.birdPosition !== undefined) {
+            birdPosition = Number(content.lastElementChild.lastElementChild.dataset.birdPosition);
+        }
+
+        
+
         let pathPosition = Number(content.lastElementChild.lastElementChild.dataset.pathPosition);
+
         //console.log(content.lastElementChild.lastElementChild);
         let pathChange = Math.random() * (pathWidth - 3);
         pathChange = Math.ceil((Math.random() * 2 - 1.5)) * pathChange;
@@ -23,6 +35,7 @@ function animate(rowIndex, content, colCount){
 
         for (let index = 0; index < rowCount; index++) {
             let c = content.getElementsByClassName('row-' + index)[0];
+            
             
             c.firstElementChild.remove();
             
@@ -41,6 +54,7 @@ function animate(rowIndex, content, colCount){
             }
 
             colElem.dataset.pathPosition = pathPosition;
+            colElem.dataset.birdPosition = birdPosition;
             colElem.style.minWidth = colWidth + 'px';
             colElem.style.display = 'inline-block';
             colElem.style.minHeight = rowHeight + 'px';
@@ -53,10 +67,54 @@ function animate(rowIndex, content, colCount){
             
         }
         
+
+        
+
+        let birdElem = content.getElementsByClassName('row-' + birdPosition)[0].firstElementChild;
+        birdElem.style.backgroundColor = '#000';
+        //console.log(birdPosition);
+
+
+        function handleKey(e){
+            if (e !== undefined) {
+                if (e.type !== 'keyup') return;
+                
+                
+        
+                switch (e.key) {
+                    case 'ArrowDown':
+                        birdPosition = birdPosition + 1;
+                        break;
+                    case 'ArrowUp':
+                        birdPosition = birdPosition - 1;
+                        break;
+                }
+                birdElem.style.backgroundColor = '#FFFFFF';
+                birdElem = content.getElementsByClassName('row-' + birdPosition)[0].firstElementChild;
+                birdElem.style.backgroundColor = '#000000';
+                content.lastElementChild.lastElementChild.dataset.birdPosition = birdPosition;
+
+
+                
+            }
+            
+        }
+        
+        document.addEventListener('keyup', handleKey);
+
+
+
+        
+
         rowIndex++;
+        
+        //console.log(birdPosition);
         if(rowIndex < 200) animate(rowIndex, content, colCount);
     }, 100);
 }
+
+
+
 
 export default class GameController {
 
@@ -71,9 +129,13 @@ export default class GameController {
         this.isRunning = true;
         // draw the initial game board, start the game
         this.viewContainer.innerHTML = '';
-        console.log(this);
+        //console.log(this);
 
         this.viewContainer.append(this.getBoardHtml(this.model));
+
+        let birdPosition = Math.round(20 / 2) - 2;
+        let birdElem = this.viewContainer.firstElementChild.getElementsByClassName('row-' + birdPosition)[0].firstElementChild;
+        birdElem.style.backgroundColor = '#000000';
         // start countdown
 
         
@@ -108,6 +170,11 @@ export default class GameController {
         let count = this.model.colCount;
         setTimeout(function() {
             let rowIndex = 100;
+            
+            
+    
+            
+
             animate(rowIndex, first, count);
         }, 3500);
         
@@ -135,7 +202,7 @@ export default class GameController {
         content.id = "gameboard";
 
         let viewPortHeight = window.innerHeight - 21; // don't count the space under controlview
-        console.log(viewPortHeight);
+        //console.log(viewPortHeight);
         let rowHeight = viewPortHeight / 20;
         let colWidth = window.innerWidth / this.model.colCount;
         let rowId = 0;
@@ -167,6 +234,7 @@ export default class GameController {
                 colElem.style.display = 'inline-block';
                 colElem.style.minHeight = rowHeight + 'px';
                 colElem.dataset.pathPosition = 5;
+                colElem.dataset.birdPosition = 8
                 colIndex++;
                 rowElem.append(colElem);
 
@@ -174,7 +242,7 @@ export default class GameController {
             content.append(rowElem);
         });
 
-        console.log('content', content);
+        //console.log('content', content);
         return content;
     }
 
