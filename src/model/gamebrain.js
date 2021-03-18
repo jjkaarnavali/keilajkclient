@@ -66,9 +66,7 @@ export default class GameBrain {
         return this.board;
     }
 
-    getPlayerName(){
-        let submitScore = document.createElement('form');
-    }
+    
 
     gameCellPath() { return gameCellPath; }
     gameCellNotPath() { return gameCellNotPath; }

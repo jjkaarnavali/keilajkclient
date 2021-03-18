@@ -10,6 +10,7 @@ import StatisticsController from './controllers/statistics-controller.js';
 let brain = new GameBrain();
 let game_view = gameView();
 let gameController = new GameController(brain, game_view);
+
 let statisticsController = new StatisticsController(brain, game_view);
 
 let view = mainView();

@@ -11,15 +11,16 @@ function findGetParameter(parameterName) {
         });
     return result;
 }
-let scoreBoard = {
-    kutt: '3'
-};
+
+
+
 export default class StatisticsController {
 
     constructor(model, viewContainer) {
         this.viewContainer = viewContainer;
         this.model = model;
         this.isRunning = false;
+        this.scoreBoard = {};
         
     }
 
@@ -28,26 +29,35 @@ export default class StatisticsController {
     run(){
         this.isRunning = true;
         this.viewContainer.innerHTML = 'stats';
-        scoreBoard.kutt2 = '4';
+        console.log(this.scoreBoard);
+        
         
 
 
 
         
         let userName = findGetParameter('userName');
-        console.log(userName);
+        
         let score = findGetParameter('score');
+        console.log(userName);
         console.log(score);
+        
         if (userName !== null && score !== null) {
-            scoreBoard[userName] = score;
-            console.log(scoreBoard);
+            this.scoreBoard[userName] = score;
+
+            /*scoreBoard += {
+                userName: score
+            };*/
+            //this.scoreBoard.userName = score;
+            
+            console.log(this.scoreBoard);
         }
         
 
-        if (scoreBoard[0] != '') {
+        if (this.scoreBoard[0] !== '') {
             this.viewContainer.innerHTML = '';
-            for(var key in scoreBoard) {
-                var value = scoreBoard[key];
+            for(var key in this.scoreBoard) {
+                var value = this.scoreBoard[key];
                 this.viewContainer.innerHTML += "user: " + key + " score: " + value;
                 
               }
@@ -71,7 +81,7 @@ export default class StatisticsController {
     }
 
     stop(){
-        this.isRunning = true;
+        this.isRunning = false;
     }
     resizeUi(){
         if (this.isRunning){
