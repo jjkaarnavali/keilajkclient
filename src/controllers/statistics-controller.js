@@ -1,3 +1,4 @@
+// first function taken from https://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
 function findGetParameter(parameterName) {
     var result = null,
         tmp = [];
@@ -10,13 +11,16 @@ function findGetParameter(parameterName) {
         });
     return result;
 }
+let scoreBoard = {
+    kutt: '3'
+};
 export default class StatisticsController {
 
     constructor(model, viewContainer) {
         this.viewContainer = viewContainer;
         this.model = model;
         this.isRunning = false;
-        this.scoreBoard = {};
+        
     }
 
     
@@ -24,6 +28,8 @@ export default class StatisticsController {
     run(){
         this.isRunning = true;
         this.viewContainer.innerHTML = 'stats';
+        scoreBoard.kutt2 = '4';
+        
 
 
 
@@ -33,15 +39,15 @@ export default class StatisticsController {
         let score = findGetParameter('score');
         console.log(score);
         if (userName !== null && score !== null) {
-            this.scoreBoard[userName] = score;
-            console.log(this.scoreBoard);
+            scoreBoard[userName] = score;
+            console.log(scoreBoard);
         }
         
 
-        if (this.scoreBoard[0] !== "") {
+        if (scoreBoard[0] != '') {
             this.viewContainer.innerHTML = '';
-            for(var key in this.scoreBoard) {
-                var value = this.scoreBoard[key];
+            for(var key in scoreBoard) {
+                var value = scoreBoard[key];
                 this.viewContainer.innerHTML += "user: " + key + " score: " + value;
                 
               }
@@ -65,7 +71,7 @@ export default class StatisticsController {
     }
 
     stop(){
-        this.isRunning = false;
+        this.isRunning = true;
     }
     resizeUi(){
         if (this.isRunning){

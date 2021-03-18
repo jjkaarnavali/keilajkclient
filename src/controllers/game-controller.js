@@ -127,7 +127,7 @@ function animate(rowIndex, content, colCount){
             stuff.value = '';
             stuff.placeholder = 'username';
             let hiddenScore = document.createElement('INPUT');
-            hiddenScore.type = 'TEXT';
+            hiddenScore.type = 'HIDDEN';
             hiddenScore.name = 'score';
             hiddenScore.value = finalScore;
             let submitButton = document.createElement('BUTTON');
@@ -214,7 +214,7 @@ export default class GameController {
         // start game-loop
         let first = this.viewContainer.firstElementChild;
         let count = this.model.colCount;
-        let result = 0;
+        
         
         setTimeout(function() {
             let rowIndex = 0;
