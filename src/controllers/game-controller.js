@@ -22,6 +22,8 @@ function animate(rowIndex, content, colCount){
 
         let pathPosition = Number(content.lastElementChild.lastElementChild.dataset.pathPosition);
 
+        
+
         //console.log(content.lastElementChild.lastElementChild);
         let pathChange = Math.random() * (pathWidth - 3);
         pathChange = Math.ceil((Math.random() * 2 - 1.5)) * pathChange;
@@ -71,6 +73,9 @@ function animate(rowIndex, content, colCount){
         
 
         let birdElem = content.getElementsByClassName('row-' + birdPosition)[0].firstElementChild;
+        
+        //console.log(rowIndex);
+        
         birdElem.style.backgroundColor = '#000';
         //console.log(birdPosition);
 
@@ -102,8 +107,11 @@ function animate(rowIndex, content, colCount){
         
         document.addEventListener('keyup', handleKey);
 
-
-
+        
+        if (content.getElementsByClassName('row-' + birdPosition)[0].children[1].style.backgroundColor !== 'rgb(255, 255, 255)') {
+            rowIndex = 201;
+        }
+        console.log(content.getElementsByClassName('row-' + birdPosition)[0].children[1].style.backgroundColor);
         
 
         rowIndex++;
