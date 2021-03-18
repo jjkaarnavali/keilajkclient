@@ -36,6 +36,8 @@ function gameControlClick(e) {
     }
 }
 
+
+
 statisticsController.run();
 
 

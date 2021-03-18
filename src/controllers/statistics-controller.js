@@ -1,3 +1,4 @@
+
 export default class StatisticsController {
 
     constructor(model, viewContainer) {
@@ -9,6 +10,17 @@ export default class StatisticsController {
     run(){
         this.isRunning = true;
         this.viewContainer.innerHTML = 'stats';
+
+        /*function formSubmitHandler(e){
+            console.log(e);
+            //e.preventDefault();
+        }
+        
+        let form = document.querySelector('#formid');
+        
+        form.addEventListener('submit', formSubmitHandler);*/
+        
+
     }
 
     stop(){

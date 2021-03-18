@@ -1,3 +1,4 @@
+
 function animate(rowIndex, content, colCount){
     setTimeout(() => {
         
@@ -74,10 +75,10 @@ function animate(rowIndex, content, colCount){
 
         let birdElem = content.getElementsByClassName('row-' + birdPosition)[0].firstElementChild;
         
-        //console.log(rowIndex);
+     
         
         birdElem.style.backgroundColor = '#000';
-        //console.log(birdPosition);
+       
 
 
         function handleKey(e){
@@ -106,19 +107,56 @@ function animate(rowIndex, content, colCount){
         }
         
         document.addEventListener('keyup', handleKey);
+        
 
         
         if (content.getElementsByClassName('row-' + birdPosition)[0].children[1].style.backgroundColor !== 'rgb(255, 255, 255)') {
+            let finalScore = rowIndex;
             rowIndex = 201;
+            //console.log(finalScore);
+            content.innerHTML = finalScore;
+            let form = document.createElement('FORM');
+            form.name = 'submitScore';
+            form.id = 'formid';
+            form.method = 'GET';
+            
+            let stuff = document.createElement('INPUT');
+            stuff.type = 'TEXT';
+            stuff.name = 'userName';
+            stuff.id = 'userName';
+            stuff.value = '';
+            stuff.placeholder = 'username';
+            let hiddenScore = document.createElement('INPUT');
+            hiddenScore.type = 'TEXT';
+            hiddenScore.name = 'score';
+            hiddenScore.value = finalScore;
+            let submitButton = document.createElement('BUTTON');
+            submitButton.type = 'SUBMIT';
+            submitButton.name = 'submit';
+            submitButton.value = 'SUBMIT';
+            submitButton.id = 'submit';
+            submitButton.innerText = 'submit';
+            //stuff.hidden = finalScore;
+            form.appendChild(stuff);
+            form.appendChild(hiddenScore);
+            form.appendChild(submitButton);
+            
+            content.appendChild(form);
+            //form.submit();
+            
+            
         }
-        console.log(content.getElementsByClassName('row-' + birdPosition)[0].children[1].style.backgroundColor);
+        //console.log(content.getElementsByClassName('row-' + birdPosition)[0].children[1].style.backgroundColor);
         
 
         rowIndex++;
         
         //console.log(birdPosition);
         if(rowIndex < 200) animate(rowIndex, content, colCount);
+        
     }, 100);
+
+    
 }
 
 
@@ -176,17 +214,23 @@ export default class GameController {
         // start game-loop
         let first = this.viewContainer.firstElementChild;
         let count = this.model.colCount;
+        let result = 0;
+        
         setTimeout(function() {
-            let rowIndex = 100;
+            let rowIndex = 0;
             
             
     
             
 
             animate(rowIndex, first, count);
+            
+            
+            
+            
         }, 3500);
         
-        
+
 
         
         
@@ -253,6 +297,12 @@ export default class GameController {
         //console.log('content', content);
         return content;
     }
+    getGameScore(gameBrain){
+        let scoreForm = document.createElement('form');
+
+    }
 
 
 }
+
+
