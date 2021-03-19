@@ -76,8 +76,16 @@ export default class StatisticsController {
             console.log(this.scoreBoard);
             console.log(scoreBo);
         }
-        this.model.scoreBoard.forEach(element => {
-            this.viewContainer.innerHTML += "user: " + element.name + " score: " + element.score + '<br>';
+        let listOfScores = this.model.scoreBoard;
+        listOfScores.sort(function(a, b){
+            return b.score - a.score;
+        })
+
+        let position = 1;
+
+        listOfScores.forEach(element => {
+            this.viewContainer.innerHTML += position + ". user: " + element.name + " score: " + element.score + '<br>';
+            position++;
         });
         
 
