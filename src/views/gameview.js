@@ -4,5 +4,9 @@ export default function gameView() {
 
     content.innerText = 'CONTAINER';
 
+    let scoreB = document.createElement('HIDDEN');
+    scoreB.id = "scoreB";
+    content.append(scoreB);
+
     return content;
 }

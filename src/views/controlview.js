@@ -2,6 +2,8 @@ export default function mainView(eventHandler) {
     let control = document.createElement('div');
     control.id = 'control';
 
+    
+
     let statisticsButton = document.createElement('button');
     statisticsButton.id = 'statistics';
     statisticsButton.innerText='Statistics';
@@ -13,6 +15,7 @@ export default function mainView(eventHandler) {
 
     control.append(statisticsButton);
     control.append(gameButton);
+    
 
     statisticsButton.addEventListener('click', eventHandler);
     gameButton.addEventListener('click', eventHandler);

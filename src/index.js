@@ -16,6 +16,7 @@ let statisticsController = new StatisticsController(brain, game_view);
 let view = mainView();
 document.body.append(view);
 let ctrl_view = controlView(gameControlClick);
+
 view.append(ctrl_view);
 view.append(game_view);
 

@@ -1,5 +1,5 @@
 
-function animate(rowIndex, content, colCount){
+function animate(rowIndex, content, colCount, scoreB){
     setTimeout(() => {
         
         let colIn = 20;
@@ -130,6 +130,11 @@ function animate(rowIndex, content, colCount){
             hiddenScore.type = 'HIDDEN';
             hiddenScore.name = 'score';
             hiddenScore.value = finalScore;
+            let hiddenScoreBoard = document.createElement('INPUT');
+            hiddenScoreBoard.type = 'HIDDEN';
+            hiddenScoreBoard.name = 'scoreboard';
+            hiddenScoreBoard.value = JSON.stringify(scoreB);
+            console.log(scoreB);
             let submitButton = document.createElement('BUTTON');
             submitButton.type = 'SUBMIT';
             submitButton.name = 'submit';
@@ -139,9 +144,14 @@ function animate(rowIndex, content, colCount){
             //stuff.hidden = finalScore;
             form.appendChild(stuff);
             form.appendChild(hiddenScore);
+            form.appendChild(hiddenScoreBoard);
             form.appendChild(submitButton);
             
             content.appendChild(form);
+
+            let scoreBoard = scoreB;
+            scoreBoard.push(finalScore);
+            console.log(scoreBoard);
             //form.submit();
             
             
@@ -152,7 +162,7 @@ function animate(rowIndex, content, colCount){
         rowIndex++;
         
         //console.log(birdPosition);
-        if(rowIndex < 200) animate(rowIndex, content, colCount);
+        if(rowIndex < 200) animate(rowIndex, content, colCount, scoreB);
         
     }, 100);
 
@@ -214,6 +224,7 @@ export default class GameController {
         // start game-loop
         let first = this.viewContainer.firstElementChild;
         let count = this.model.colCount;
+        let scoreBoard = this.model.scoreBoard
         
         
         setTimeout(function() {
@@ -223,7 +234,7 @@ export default class GameController {
     
             
 
-            animate(rowIndex, first, count);
+            animate(rowIndex, first, count, scoreBoard);
             
             
             

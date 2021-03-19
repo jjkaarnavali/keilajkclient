@@ -13,6 +13,8 @@ function findGetParameter(parameterName) {
 }
 
 
+let scoreBo = [];
+
 
 export default class StatisticsController {
 
@@ -22,13 +24,16 @@ export default class StatisticsController {
         this.isRunning = false;
         this.scoreBoard = {};
         
+        
     }
+
+    
 
     
 
     run(){
         this.isRunning = true;
-        this.viewContainer.innerHTML = 'stats';
+        this.viewContainer.innerHTML = 'LEADERBOARD <br>';
         console.log(this.scoreBoard);
         
         
@@ -39,11 +44,29 @@ export default class StatisticsController {
         let userName = findGetParameter('userName');
         
         let score = findGetParameter('score');
+
+        let scoreBoar = findGetParameter('scoreboard');
         console.log(userName);
         console.log(score);
+        console.log(scoreBoar);
+        scoreBoar = JSON.parse(scoreBoar);
+        console.log(scoreBoar);
+        for (let index = 0; index < scoreBoar.length; index++) {
+            this.model.addToScoreBoard(scoreBoar[index]);
+        }
+        
         
         if (userName !== null && score !== null) {
+            let nScore = this.model.getScore(userName, score);
             this.scoreBoard[userName] = score;
+            scoreBo.push(nScore);
+            this.model.addToScoreBoard(nScore);
+            let test = this.model.scoreBoard;
+
+            console.log(test);
+            
+            
+
 
             /*scoreBoard += {
                 userName: score
@@ -51,17 +74,26 @@ export default class StatisticsController {
             //this.scoreBoard.userName = score;
             
             console.log(this.scoreBoard);
+            console.log(scoreBo);
         }
+        this.model.scoreBoard.forEach(element => {
+            this.viewContainer.innerHTML += "user: " + element.name + " score: " + element.score + '<br>';
+        });
         
 
-        if (this.scoreBoard[0] !== '') {
+        /*if (this.scoreBoard[0] !== '') {
             this.viewContainer.innerHTML = '';
             for(var key in this.scoreBoard) {
                 var value = this.scoreBoard[key];
                 this.viewContainer.innerHTML += "user: " + key + " score: " + value;
                 
               }
-        }
+        }*/
+        //let scoreB = document.createElement('div');
+
+        //scoreB.id = 'scoreB';
+        //scoreB.value = this.scoreBoard;
+        
 
         
           

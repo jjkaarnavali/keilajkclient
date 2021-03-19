@@ -5,6 +5,8 @@ class GameScore {
     }
 }
 
+
+
 export const gameCellPath = 0;
 export const gameCellNotPath = -1;
 
@@ -19,6 +21,21 @@ export default class GameBrain {
         this.board = [];
 
         this.intializeBoard();
+    }
+
+    getScore(name, score){
+        let nScore = new GameScore;
+        nScore.name = name;
+        nScore.score = score;
+        return nScore;
+    }
+
+    addToScoreBoard(score){
+        this.scoreBoard.push(score);
+    }
+
+    getScoreBoard(){
+        return this.scoreBoard;
     }
 
 
@@ -65,6 +82,8 @@ export default class GameBrain {
     getGameBoard() {
         return this.board;
     }
+
+    
 
     
 
