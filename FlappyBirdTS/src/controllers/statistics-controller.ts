@@ -51,16 +51,16 @@ export default class StatisticsController {
         let userName = findGetParameter('userName');
         
         let score = findGetParameter('score');
+        let scoreBoar = "";
 
-        let scoreBoar = findGetParameter('scoreboard');
-        let scoreBoarJson = String;
-        console.log(userName);
-        console.log(score);
-        console.log(scoreBoar);
-        scoreBoarJson = JSON.parse(scoreBoar!);
+        scoreBoar = findGetParameter('scoreboard')!;
+        
+        
+        
+        scoreBoar = JSON.parse(scoreBoar);
         console.log(scoreBoar);
         
-        for (let index = 0; index < scoreBoarJson.length; index++) {
+        for (let index = 0; index < scoreBoar.length; index++) {
             this.model.addToScoreBoard(scoreBoar![index]);
         }
         
