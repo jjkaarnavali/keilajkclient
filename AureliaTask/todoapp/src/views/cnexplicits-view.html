@@ -13,7 +13,8 @@
     <tbody>
 
         
-         <tr repeat.for="item of data">
+        
+         <tr repeat.for="item of appState.cnexplicits" item.bind="item">
             <td>
                 ${item.value}
             </td>

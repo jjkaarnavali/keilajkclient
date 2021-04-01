@@ -1,4 +1,4 @@
-<h1>Explicit Chuck Norris jokes</h1>
+<h1>Political Chuck Norris jokes</h1>
 
 
 <table class="table">
@@ -13,7 +13,7 @@
     <tbody>
 
         
-         <tr repeat.for="item of data">
+         <tr repeat.for="item of appState.cnpoliticals" item.bind="item">
             <td>
                 ${item.value}
             </td>

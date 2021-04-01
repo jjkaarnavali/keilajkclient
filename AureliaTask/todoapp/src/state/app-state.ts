@@ -4,6 +4,8 @@ import { ICNjoke } from "../domain/ICNjoke";
 export class AppState {
     public todos: readonly ITodo[] = [];
     public cnexplicits: readonly ICNjoke[] = [];
+    public cnpoliticals: readonly ICNjoke[] = [];
+    public cnsports: readonly ICNjoke[] = [];
 
     constructor() {
         this.todos = [
@@ -33,14 +35,16 @@ export class AppState {
 
 
     addCNexplicit(joke: ICNjoke): void {
-        this.cnexplicits = [...this.cnexplicits, joke];
+        this.cnexplicits = [joke, ...this.cnexplicits];
     }
 
-    removeCNexplicit(elemNo: number): void {
-        this.cnexplicits = this.cnexplicits.filter((elem, index) => index !== elemNo);
+    addCNsport(joke: ICNjoke): void {
+        this.cnsports = [joke, ...this.cnsports];
     }
 
-    countToCNexplicit(): number {
-        return this.cnexplicits.length;
+    addCNpolitical(joke: ICNjoke): void {
+        this.cnpoliticals = [joke, ...this.cnpoliticals];
     }
+
+    
 }
