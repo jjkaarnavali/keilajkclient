@@ -8,14 +8,21 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "aurelia": "latest"
+    "aurelia": "latest",
+    "bootstrap": "^4.6.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1"
   },
   "devDependencies": {
     "@aurelia/testing": "latest",
     "@aurelia/ts-jest": "latest",
     "@aurelia/webpack-loader": "latest",
+    "@types/bootstrap": "^4.6.0",
     "@types/jest": "^26.0.21",
+    "@types/jquery": "^3.5.5",
     "@types/node": "^14.14.35",
+    "@types/popper.js": "^1.11.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "autoprefixer": "^10.2.5",
