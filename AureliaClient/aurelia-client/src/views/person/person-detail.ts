@@ -3,7 +3,7 @@ import { IPerson } from "../../domain/IPerson";
 import { BaseService } from "../../services/base-service";
 import { AppState } from "../../state/app-state";
 
-export class PersonsDetail implements IRouteViewModel  {
+export class PersonDetail implements IRouteViewModel  {
     //https://localhost:5001/api/v1/Persons/id_of_entity 
 
     private service: BaseService<IPerson> =

@@ -4,7 +4,7 @@ import { IPersonEdit } from "../../domain/IPersonEdit";
 import { BaseService } from "../../services/base-service";
 import { AppState } from "../../state/app-state";
 
-export class PersonsEdit implements IRouteViewModel {
+export class PersonEdit implements IRouteViewModel {
     //https://localhost:5001/api/v1/Persons/id_of_entity 
 
     private service: BaseService<IPersonEdit> =
