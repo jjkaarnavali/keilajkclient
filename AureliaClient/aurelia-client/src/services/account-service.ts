@@ -47,4 +47,43 @@ export class AccountService {
 
     }
 
+    async register(email: string, password: string, firstname: string, lastname: string, userlevel: string): Promise<IFetchResponse<IJwt | IMessage>> {
+        let url = this.apiEndpointUrl;
+
+
+        try {
+            let body = {email, password, firstname, lastname, userlevel};
+            let bodyStr = JSON.stringify(body);
+            console.log(bodyStr);
+
+            const response = await this.httpClient.post(url, bodyStr , { cache: "no-store" });
+
+            console.log('foobar1');
+            console.log(response);
+
+            if (response.ok) {
+                const data = (await response.json()) as IJwt;
+                return {
+                    statusCode: response.status,
+                    data: data,
+                };
+            }
+
+            // TODO: why cant i do this?
+            const data = (await response.json()) as IMessage;
+
+            console.log('foobar2');
+            return {
+                statusCode: response.status,
+                errorMessage: response.statusText + ' ' + data.messages.join(' '),
+            };
+        } catch (reason) {
+            return {
+                statusCode: 0,
+                errorMessage: JSON.stringify(reason),
+            };
+        }
+
+    }
+
 }

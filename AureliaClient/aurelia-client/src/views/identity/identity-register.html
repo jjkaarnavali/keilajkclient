@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-md-4">
+        <form  id="account" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+            <div class="form-group">
+                <label for="Input_Email">Email</label>
+                <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" value.bind="email" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_Password">Password</label>
+                <input class="form-control" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Input_Password" maxlength="100" name="Input.Password" value.bind="password"/>
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_ConfirmPassword">Confirm password</label>
+                <input class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="Input_ConfirmPassword" name="Input.ConfirmPassword" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.ConfirmPassword" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_FirstName">First name</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The field First name must be a string with a minimum length of 1 and a maximum length of 128." data-val-length-max="128" data-val-length-min="1" data-val-required="The First name field is required." id="Input_FirstName" maxlength="128" name="Input.FirstName" value.bind="firstname" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.FirstName" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_LastName">Last name</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The field Last name must be a string with a minimum length of 1 and a maximum length of 128." data-val-length-max="128" data-val-length-min="1" data-val-required="The Last name field is required." id="Input_LastName" maxlength="128" name="Input.LastName" value.bind="lastname" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.LastName" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_UserLevel">User level</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The field User level must be a string with a minimum length of 1 and a maximum length of 2." data-val-length-max="2" data-val-length-min="1" data-val-required="The User level field is required." id="Input_UserLevel" maxlength="2" name="Input.UserLevel" value.bind="userlevel" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.UserLevel" data-valmsg-replace="true"></span>
+            </div>
+            
+            <button click.delegate="registerClicked($event)" type="submit" class="btn btn-primary">Register</button>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8E7aXoJBzExOsnhqYuBQ2oqYyXUZvG_6nQwLyuLaIvGUMUzB9m_rDN_5i4HIOE8lpvEKEccd1y9aBDekGNOusLC4iuwfHyyUh1KxP7nfst7j236c1yXVFxnbZ0R_P9RkYNxh3A0oDhJH6HWBXt6KBGM" /></form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to register.</h4>
+            <hr />
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+        </section>
+    </div>
+</div>

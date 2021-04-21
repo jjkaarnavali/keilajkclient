@@ -3,6 +3,7 @@
 
 <!-- import viewmodel based view - dont use extension-->
 <import from="./views/identity/identity-login" />
+<import from="./views/identity/identity-register" />
 <import from="./views/person/person-router.html" />
 
 <import from="./views/person/person-index" />
@@ -30,7 +31,7 @@
 
                 <ul class="navbar-nav">
                     <li show.bind="state.token == null" class="nav-item">
-                        <a class="nav-link text-dark" href="#">Register</a>
+                        <a class="nav-link text-dark" load="identity-register">Register</a>
                     </li>
                     <li show.bind="state.token == null" class="nav-item">
                         <a class="nav-link text-dark" load="identity-login">Login</a>
