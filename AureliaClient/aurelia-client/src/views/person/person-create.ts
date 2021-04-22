@@ -4,7 +4,7 @@ import { IPersonEdit } from "../../domain/IPersonEdit";
 import { BaseService } from "../../services/base-service";
 import { AppState } from "../../state/app-state";
 
-export class PersonEdit implements IRouteViewModel {
+export class PersonCreate implements IRouteViewModel {
     //https://localhost:5001/api/v1/Persons/id_of_entity 
 
     private service: BaseService<IPersonEdit> =
@@ -12,6 +12,7 @@ export class PersonEdit implements IRouteViewModel {
 
 
     private data: IPersonEdit;
+    
 
     constructor(protected httpClient: HttpClient, private state: AppState) {
 
@@ -22,19 +23,10 @@ export class PersonEdit implements IRouteViewModel {
         console.log("state", this.state);
     }
 
-    async load(parameters) {
-        console.log("load", parameters);
+    
 
-        let response = await this.service.get(parameters[0]);
-        console.log("IPersonEdit", response);
-        if (response.data) {
-            this.data = response.data;
-        }
-
-    }
-
-    async saveChanges(event: Event): Promise<void> {
-        let objToSave: IPersonEdit = { 
+    async createPerson(event: Event): Promise<void> {
+        let objToCreate: IPersonEdit = { 
             id: this.data.id, 
             firstName: 
             this.data.firstName, 
@@ -43,8 +35,9 @@ export class PersonEdit implements IRouteViewModel {
             personsIdCode:
             this.data.personsIdCode
         };
+        console.log(objToCreate);
 
-        let response = await this.service.put(objToSave);
+        let response = await this.service.post(objToCreate);
 
         console.log(response);
     }

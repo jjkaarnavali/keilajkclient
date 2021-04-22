@@ -4,14 +4,14 @@ import { IPersonEdit } from "../../domain/IPersonEdit";
 import { BaseService } from "../../services/base-service";
 import { AppState } from "../../state/app-state";
 
-export class PersonEdit implements IRouteViewModel {
+export class PersonDelete implements IRouteViewModel {
     //https://localhost:5001/api/v1/Persons/id_of_entity 
 
-    private service: BaseService<IPersonEdit> =
-        new BaseService<IPersonEdit>("https://localhost:5001/api/v1/Persons", this.httpClient, this.state.token);
+    private service: BaseService<IPerson> =
+        new BaseService<IPerson>("https://localhost:5001/api/v1/Persons", this.httpClient, this.state.token);
 
 
-    private data: IPersonEdit;
+    private data: IPerson;
 
     constructor(protected httpClient: HttpClient, private state: AppState) {
 
@@ -33,18 +33,11 @@ export class PersonEdit implements IRouteViewModel {
 
     }
 
-    async saveChanges(event: Event): Promise<void> {
-        let objToSave: IPersonEdit = { 
-            id: this.data.id, 
-            firstName: 
-            this.data.firstName, 
-            lastName: 
-            this.data.lastName,
-            personsIdCode:
-            this.data.personsIdCode
-        };
+    async deletePerson(event: Event): Promise<void> {
+        
+        let idToDelete = this.data.id;
 
-        let response = await this.service.put(objToSave);
+        let response = await this.service.delete(idToDelete);
 
         console.log(response);
     }
