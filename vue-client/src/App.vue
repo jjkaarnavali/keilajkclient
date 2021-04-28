@@ -28,6 +28,10 @@
                             <router-link class="nav-link text-dark" to="/payment-types/"
                                 >Payment Types</router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link text-dark" to="/product-types/"
+                                >Product Types</router-link>
+                        </li>
                     </ul>
                     <ul v-if="token == null" class="navbar-nav">
                         <li class="nav-item">

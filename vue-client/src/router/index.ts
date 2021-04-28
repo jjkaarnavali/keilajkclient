@@ -12,6 +12,11 @@ import PaymentTypeDetails from '../views/payment-types/Details.vue';
 import PaymentTypeCreate from '../views/payment-types/Create.vue';
 import PaymentTypeEdit from '../views/payment-types/Edit.vue';
 import PaymentTypeDelete from '../views/payment-types/Delete.vue';
+import ProductTypeIndex from '../views/product-types/Index.vue';
+import ProductTypeDetails from '../views/product-types/Details.vue';
+import ProductTypeCreate from '../views/product-types/Create.vue';
+import ProductTypeEdit from '../views/product-types/Edit.vue';
+import ProductTypeDelete from '../views/product-types/Delete.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -49,6 +54,12 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/payment-types/create', name: 'payment-types-create', component: PaymentTypeCreate, },
     { path: '/payment-types/edit/:id', name: 'payment-types-edit', component: PaymentTypeEdit, props: true },
     { path: '/payment-types/delete/:id', name: 'payment-types-delete', component: PaymentTypeDelete, props: true },
+
+    { path: '/product-types/', name: 'product-types-index', component: ProductTypeIndex, },
+    { path: '/product-types/details/:id', name: 'product-types-details', component: ProductTypeDetails, props: true },
+    { path: '/product-types/create', name: 'product-types-create', component: ProductTypeCreate, },
+    { path: '/product-types/edit/:id', name: 'product-types-edit', component: ProductTypeEdit, props: true },
+    { path: '/product-types/delete/:id', name: 'product-types-delete', component: ProductTypeDelete, props: true },
 
 ]
 
