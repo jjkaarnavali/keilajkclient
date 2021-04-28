@@ -90,7 +90,7 @@ export class BaseService<TEntity extends IEntityId> {
         }
 
         try {
-            const response = await axios.post("https://localhost:5001/api/v1/Persons", entity, { headers: this.authHeaders });
+            const response = await axios.post(url, entity, { headers: this.authHeaders });
             if (response.status >= 200 && response.status < 300) {
                 return {
                     statusCode: response.status,
