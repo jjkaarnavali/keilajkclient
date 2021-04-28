@@ -1,25 +1,28 @@
-import { HttpClient } from "aurelia";
-import { IFetchResponse } from "../types/IFetchResponse";
-import { IQueryParams } from "../types/IQueryParams";
+import store from "@/store";
+import { IFetchResponse } from "@/types/IFetchResponse";
+import { IQueryParams } from "@/types/IQueryParams";
+import axios from 'axios';
 
 export interface IEntityId {
-    id: string;
+    id: string | undefined;
 }
 
 export class BaseService<TEntity extends IEntityId> {
-
-    constructor(protected apiEndpointUrl: string, protected httpClient: HttpClient, private jwt?: string) {
-        // apiEndpointUrl = https://xxx.xxx.xxx.xx/api/v1/Persons
-
+    constructor(protected apiEndpointUrl: string, private jwt?: string) {
+        console.log('BaseService.constructor');
+        // apiEndpointUrl = https://xxx.xxx.xxx.xx/api/v1/ContactTypes
     }
 
-    private authHeaders = this.jwt !== undefined ?
-        {
-            'Authorization': 'Bearer ' + this.jwt
-        }
-        :
-        {
-
+    private authHeaders = this.jwt !== undefined
+        ? {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+            Authorization: 'Bearer ' + this.jwt
+        } : {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
         };
 
     async getAll(queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity[]>> {
@@ -27,25 +30,17 @@ export class BaseService<TEntity extends IEntityId> {
 
         if (queryParams !== undefined) {
             // TODO: add query params to url
+            url = url + "";
         }
 
         try {
-
-            const response = await this.httpClient.fetch(
-                url,
-                {
-                    cache: "no-store",
-                    headers: this.authHeaders
-                }
-            );
-            if (response.ok) {
-                const data = (await response.json()) as TEntity[];
+            const response = await axios.get(url, { headers: this.authHeaders });
+            if (response.status >= 200 && response.status < 300) {
                 return {
                     statusCode: response.status,
-                    data: data,
+                    data: response.data as TEntity[],
                 };
             }
-
             return {
                 statusCode: response.status,
                 errorMessage: response.statusText,
@@ -56,7 +51,6 @@ export class BaseService<TEntity extends IEntityId> {
                 errorMessage: JSON.stringify(reason),
             };
         }
-
     }
 
     async get(id: string, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
@@ -68,12 +62,11 @@ export class BaseService<TEntity extends IEntityId> {
         }
 
         try {
-            const response = await this.httpClient.fetch(url, { cache: "no-store", headers: this.authHeaders });
-            if (response.ok) {
-                const data = (await response.json()) as TEntity;
+            const response = await axios.get(url, { headers: this.authHeaders });
+            if (response.status >= 200 && response.status < 300) {
                 return {
                     statusCode: response.status,
-                    data: data,
+                    data: response.data as TEntity,
                 };
             }
 
@@ -87,7 +80,34 @@ export class BaseService<TEntity extends IEntityId> {
                 errorMessage: JSON.stringify(reason),
             };
         }
+    }
 
+    async post(entity: TEntity, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
+        const url = this.apiEndpointUrl;
+
+        if (queryParams !== undefined) {
+            // TODO: add query params to url
+        }
+
+        try {
+            const response = await axios.post("https://localhost:5001/api/v1/Persons", entity, { headers: this.authHeaders });
+            if (response.status >= 200 && response.status < 300) {
+                return {
+                    statusCode: response.status,
+                    data: undefined,
+                };
+            }
+
+            return {
+                statusCode: response.status,
+                errorMessage: response.statusText,
+            };
+        } catch (reason) {
+            return {
+                statusCode: 0,
+                errorMessage: JSON.stringify(reason),
+            };
+        }
     }
 
     async put(entity: TEntity, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
@@ -98,11 +118,9 @@ export class BaseService<TEntity extends IEntityId> {
             // TODO: add query params to url
         }
 
-        let entityStr = JSON.stringify(entity);
-
         try {
-            const response = await this.httpClient.put(url, entityStr, { cache: "no-store", headers: this.authHeaders });
-            if (response.ok) {
+            const response = await axios.put(url, entity, { headers: this.authHeaders });
+            if (response.status >= 200 && response.status < 300) {
                 return {
                     statusCode: response.status,
                     data: undefined,
@@ -119,54 +137,19 @@ export class BaseService<TEntity extends IEntityId> {
                 errorMessage: JSON.stringify(reason),
             };
         }
-
     }
 
-    async delete(id: string, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
+    async delete(entity: TEntity, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
         let url = this.apiEndpointUrl;
-        url = url + '/' + id;
+        url = url + '/' + entity.id;
 
         if (queryParams !== undefined) {
             // TODO: add query params to url
         }
 
         try {
-            const response = await this.httpClient.delete(url, id, { cache: "no-store", headers: this.authHeaders });
-            if (response.ok) {
-                const data = (await response.json()) as TEntity;
-                return {
-                    statusCode: response.status,
-                    data: data,
-                };
-            }
-
-            return {
-                statusCode: response.status,
-                errorMessage: response.statusText,
-            };
-        } catch (reason) {
-            return {
-                statusCode: 0,
-                errorMessage: JSON.stringify(reason),
-            };
-        }
-
-    }
-
-    async post(entity: TEntity, queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity>> {
-        let url = this.apiEndpointUrl;
-        
-
-        if (queryParams !== undefined) {
-            // TODO: add query params to url
-        }
-
-        let entityStr = JSON.stringify(entity);
-        console.log(entityStr);
-
-        try {
-            const response = await this.httpClient.post(url, entityStr, { cache: "no-store", headers: this.authHeaders });
-            if (response.ok) {
+            const response = await axios.delete(url, { headers: this.authHeaders });
+            if (response.status >= 200 && response.status < 300) {
                 return {
                     statusCode: response.status,
                     data: undefined,
@@ -183,6 +166,5 @@ export class BaseService<TEntity extends IEntityId> {
                 errorMessage: JSON.stringify(reason),
             };
         }
-
     }
 }
