@@ -23,6 +23,7 @@ import PersonIndex from './containers/persons/PersonIndex';
 
 import HomeIndex from './containers/home/HomeIndex';
 import Login from './containers/identity/Login';
+import Register from './containers/identity/Register';
 import Page404 from './containers/Page404';
 import PageForm from './containers/PageForm';
 import { AppContextProvider, initialAppState } from './context/AppContext';
@@ -46,6 +47,7 @@ function App() {
                             <Route path="/form" component={PageForm} />
 
                             <Route path="/identity/login" component={Login} />
+                            <Route path="/identity/register" component={Register} />
 
                             <Route path="/producttypes/create" component={ProductTypeCreate1} />
                             <Route path="/producttypes/edit/:id" component={ProductTypeEdit} />

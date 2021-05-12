@@ -33,4 +33,25 @@ export abstract class IdentityService {
 
     }
 
+    static async Register(apiEndpoint: string, registerData: {email: string, password:string, firstname:string, lastname:string, userlevel:string}): Promise<IFetchResponse<ILoginResponse>> {
+        let registerDataJson = JSON.stringify(registerData);
+        try {
+            let response = await this.axios.post<ILoginResponse>(apiEndpoint, registerDataJson);
+            return {
+                ok: response.status <= 299,
+                statusCode: response.status,
+                data: response.data
+            };    
+        }
+        catch (err) {
+            let error = err as AxiosError;
+            return {
+                ok: false,
+                statusCode: error.response?.status ?? 500,
+                messages: (error.response?.data as IMessages).messages,
+            }
+        }
+
+    }
+
 }

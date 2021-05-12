@@ -38,9 +38,15 @@ const Header = () => {
                         </ul>
                         <ul className="navbar-nav">
                             {appState.jwt === null ?
+                            <>
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-dark" to="/identity/login">Login</NavLink>
                                 </li>
+
+                                <li className="nav-item">
+                                <NavLink className="nav-link text-dark" to="/identity/register">Register</NavLink>
+                                </li>
+                                </>
 
                                 :
                                 <>
