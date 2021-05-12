@@ -1,6 +1,6 @@
 export interface IProductType {
-    id: string;
+    id: string | undefined;
 
-    typeNameId: string;
+    typeNameId: string | undefined;
     typeName: string;
 }

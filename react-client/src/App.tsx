@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ProductTypeCreate from './containers/product-types/ProductTypeCreate';
+import ProductTypeCreate1 from './containers/product-types/ProductTypeCreate1';
 import ProductTypeDelete from './containers/product-types/ProductTypeDelete';
 import ProductTypeDetails from './containers/product-types/ProductTypeDetails';
 import ProductTypeEdit from './containers/product-types/ProductTypeEdit';
@@ -33,7 +34,7 @@ function App() {
 
                             <Route path="/identity/login" component={Login} />
 
-                            <Route path="/producttypes/create" component={ProductTypeCreate} />
+                            <Route path="/producttypes/create" component={ProductTypeCreate1} />
                             <Route path="/producttypes/edit/:id" component={ProductTypeEdit} />
                             <Route path="/producttypes/delete/:id" component={ProductTypeDelete} />
                             <Route path="/producttypes/:id" component={ProductTypeDetails} />

@@ -8,6 +8,7 @@ import { IProductType } from "../../dto/IProductType";
 import { BaseService } from "../../services/base-service";
 import { EPageStatus } from "../../types/EPageStatus";
 import { Route, Switch } from 'react-router-dom';
+import ProductTypeIndex from "./ProductTypeIndex";
 
 interface IFormValues {
     input: string;
@@ -24,7 +25,7 @@ const ProductTypeCreateView = (props: IFormProps) => {
 
         <h4>Product type</h4>
         <hr />
-        <form>
+        <form onSubmit={(e) => ProductTypeCreate(e.nativeEvent)}>
         <div className="row">
             <div className="col-md-4">
                 <div className="form-group">
@@ -59,7 +60,7 @@ const initialFormValues: IFormValues = {
     input: ''
 };
 
-const ProductTypeCreate = () => {
+const ProductTypeCreate = (e: Event) => {
     const [formValues, setFormValues] = useState(initialFormValues);
 
     const handleChange = (target: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => {
@@ -87,10 +88,10 @@ const ProductTypeCreate = () => {
         formValues.input
     };
 
-    const postData = async () => {
+    const postData = async (obj: IProductType) => {
 
         console.log(appState.jwt);
-        let result = await BaseService.post<IProductType>(objToCreate, '/producttypes', appState.jwt!);
+        let result = await BaseService.post<IProductType>(obj, '/producttypes', appState.jwt!);
         if (result.ok && result.data) {
             setPageStatus({ pageStatus: EPageStatus.OK, statusCode: 0 });
             setProductType(result.data);
@@ -98,12 +99,16 @@ const ProductTypeCreate = () => {
             setPageStatus({ pageStatus: EPageStatus.Error, statusCode: result.statusCode });
         }
     }
+    console.log(e);
 
-    onsubmit = () =>{
+
+    /*onsubmit = () =>{
+        console.log("submiti joudis")
+        objToCreate.typeName = formValues.input;
+        postData(objToCreate);
+        return<ProductTypeIndex/>
         
-        postData();
-        return <Route path="/producttypes"/>
-    }
+    }*/
 
     
 

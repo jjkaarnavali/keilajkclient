@@ -12,7 +12,9 @@ const RowDisplay = (props: { productType: IProductType }) => (
             {props.productType.typeName}
         </td>
         <td>
-            <Link to={'/ProductTypes/' + props.productType.id}>Details</Link>
+            <Link to={'/ProductTypes/' + props.productType.id}>Details </Link> 
+            | <Link to={'/ProductTypes/Edit/' + props.productType.id}>Edit </Link> 
+            | <Link to={'/ProductTypes/Delete/' + props.productType.id}>Delete </Link>
         </td>
     </tr>
 );
@@ -41,6 +43,7 @@ const ProductTypeIndex = () => {
     return (
         <>
             <h1>ProductTypes</h1>
+            <Link to={'/ProductTypes/Create'}>Create new</Link> 
             <table className="table">
                 <thead>
                     <tr>
