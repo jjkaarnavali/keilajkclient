@@ -2,39 +2,40 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { AppContext } from "../../context/AppContext";
-import { IProductType } from "../../dto/IProductType";
+import { IPaymentType } from "../../dto/IPaymentType";
 import { BaseService } from "../../services/base-service";
 import { EPageStatus } from "../../types/EPageStatus";
 
-const RowDisplay = (props: { productType: IProductType }) => (
+const RowDisplay = (props: { paymentType: IPaymentType }) => (
     <tr>
         <td>
-            {props.productType.typeName}
+            {props.paymentType.paymentTypeName}
         </td>
         <td>
-            <Link to={'/ProductTypes/' + props.productType.id}>Details </Link> 
-            | <Link to={'/ProductTypes/Edit/' + props.productType.id}>Edit </Link> 
-            | <Link to={'/ProductTypes/Delete/' + props.productType.id}>Delete </Link>
+            <Link to={'/PaymentTypes/' + props.paymentType.id}>Details </Link> 
+            | <Link to={'/PaymentTypes/Edit/' + props.paymentType.id}>Edit </Link> 
+            | <Link to={'/PaymentTypes/Delete/' + props.paymentType.id}>Delete </Link>
         </td>
     </tr>
 );
 
-const ProductTypeIndex = () => {
-    const [productTypes, setProductTypes] = useState([] as IProductType[]);
+const PaymentTypeIndex = () => {
+    const [paymentTypes, setPaymentTypes] = useState([] as IPaymentType[]);
 
     const [pageStatus, setPageStatus] = useState({ pageStatus: EPageStatus.Loading, statusCode: -1 });
     const appState = useContext(AppContext);
 
     const loadData = async () => {
-        let result = await BaseService.getAll<IProductType>('/producttypes', appState.jwt!);
+        let result = await BaseService.getAll<IPaymentType>('/paymenttypes', appState.jwt!);
 
         if (result.ok && result.data) {
             setPageStatus({ pageStatus: EPageStatus.OK, statusCode: 0 });
-            setProductTypes(result.data);
+            setPaymentTypes(result.data);
         } else {
             setPageStatus({ pageStatus: EPageStatus.Error, statusCode: result.statusCode });
         }
     }
+    
 
     useEffect(() => {
         loadData();
@@ -42,20 +43,20 @@ const ProductTypeIndex = () => {
 
     return (
         <>
-            <h1>ProductTypes</h1>
-            <Link to={'/ProductTypes/Create'}>Create new</Link> 
+            <h1>PaymentTypes</h1>
+            <Link to={'/PaymentTypes/Create'}>Create new</Link> 
             <table className="table">
                 <thead>
                     <tr>
                         <th>
-                            ProductType
+                            PaymentType
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {productTypes.map(productType =>
-                        <RowDisplay productType={productType} key={productType.id} />)
+                    {paymentTypes.map(paymentType =>
+                        <RowDisplay paymentType={paymentType} key={paymentType.id} />)
                     }
                 </tbody>
             </table>
@@ -64,4 +65,4 @@ const ProductTypeIndex = () => {
     );
 }
 
-export default ProductTypeIndex;
+export default PaymentTypeIndex;

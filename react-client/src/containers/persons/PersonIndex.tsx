@@ -50,6 +50,9 @@ const ProductTypeIndex = () => {
                         <th>
                             ProductType
                         </th>
+                        <th>
+                            Product
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
