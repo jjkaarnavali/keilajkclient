@@ -2,35 +2,41 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { AppContext } from "../../context/AppContext";
-import { IProductType } from "../../dto/IProductType";
+import { IPerson } from "../../dto/IPerson";
 import { BaseService } from "../../services/base-service";
 import { EPageStatus } from "../../types/EPageStatus";
 
-const RowDisplay = (props: { productType: IProductType }) => (
+const RowDisplay = (props: { person: IPerson }) => (
     <tr>
         <td>
-            {props.productType.typeName}
+            {props.person.firstName}
         </td>
         <td>
-            <Link to={'/ProductTypes/' + props.productType.id}>Details </Link> 
-            | <Link to={'/ProductTypes/Edit/' + props.productType.id}>Edit </Link> 
-            | <Link to={'/ProductTypes/Delete/' + props.productType.id}>Delete </Link>
+            {props.person.lastName}
+        </td>
+        <td>
+            {props.person.personsIdCode}
+        </td>
+        <td>
+            <Link to={'/Persons/' + props.person.id}>Details </Link> 
+            | <Link to={'/Persons/Edit/' + props.person.id}>Edit </Link> 
+            | <Link to={'/Persons/Delete/' + props.person.id}>Delete </Link>
         </td>
     </tr>
 );
 
-const ProductTypeIndex = () => {
-    const [productTypes, setProductTypes] = useState([] as IProductType[]);
+const PersonIndex = () => {
+    const [persons, setPersons] = useState([] as IPerson[]);
 
     const [pageStatus, setPageStatus] = useState({ pageStatus: EPageStatus.Loading, statusCode: -1 });
     const appState = useContext(AppContext);
 
     const loadData = async () => {
-        let result = await BaseService.getAll<IProductType>('/producttypes', appState.jwt!);
+        let result = await BaseService.getAll<IPerson>('/persons', appState.jwt!);
 
         if (result.ok && result.data) {
             setPageStatus({ pageStatus: EPageStatus.OK, statusCode: 0 });
-            setProductTypes(result.data);
+            setPersons(result.data);
         } else {
             setPageStatus({ pageStatus: EPageStatus.Error, statusCode: result.statusCode });
         }
@@ -42,23 +48,26 @@ const ProductTypeIndex = () => {
 
     return (
         <>
-            <h1>ProductTypes</h1>
-            <Link to={'/ProductTypes/Create'}>Create new</Link> 
+            <h1>Persons</h1>
+            <Link to={'/Persons/Create'}>Create new</Link> 
             <table className="table">
                 <thead>
                     <tr>
                         <th>
-                            ProductType
+                            First Name
                         </th>
                         <th>
-                            Product
+                            Last Name
+                        </th>
+                        <th>
+                            ID code
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {productTypes.map(productType =>
-                        <RowDisplay productType={productType} key={productType.id} />)
+                    {persons.map(person =>
+                        <RowDisplay person={person} key={person.id} />)
                     }
                 </tbody>
             </table>
@@ -67,4 +76,4 @@ const ProductTypeIndex = () => {
     );
 }
 
-export default ProductTypeIndex;
+export default PersonIndex;

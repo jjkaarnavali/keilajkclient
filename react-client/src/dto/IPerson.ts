@@ -7,6 +7,6 @@ export interface IPerson {
     lastNameId: string | undefined;
     lastName: string;
 
-    personIdCodeId: string | undefined;
-    personIdCode: string;
+    personsIdCodeId: string | undefined;
+    personsIdCode: string;
 }
