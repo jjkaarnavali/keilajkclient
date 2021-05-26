@@ -22,6 +22,11 @@ import ProductDetails from '../views/products/Details.vue';
 import ProductCreate from '../views/products/Create.vue';
 import ProductEdit from '../views/products/Edit.vue';
 import ProductDelete from '../views/products/Delete.vue';
+import PriceIndex from '../views/prices/Index.vue';
+import PriceDetails from '../views/prices/Details.vue';
+import PriceCreate from '../views/prices/Create.vue';
+import PriceEdit from '../views/prices/Edit.vue';
+import PriceDelete from '../views/prices/Delete.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -71,6 +76,12 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/products/create', name: 'products-create', component: ProductCreate, },
     { path: '/products/edit/:id', name: 'products-edit', component: ProductEdit, props: true },
     { path: '/products/delete/:id', name: 'products-delete', component: ProductDelete, props: true },
+
+    { path: '/prices/', name: 'prices-index', component: PriceIndex, },
+    { path: '/prices/details/:id', name: 'prices-details', component: PriceDetails, props: true },
+    { path: '/prices/create', name: 'prices-create', component: PriceCreate, },
+    { path: '/prices/edit/:id', name: 'prices-edit', component: PriceEdit, props: true },
+    { path: '/prices/delete/:id', name: 'prices-delete', component: PriceDelete, props: true },
 
 ]
 

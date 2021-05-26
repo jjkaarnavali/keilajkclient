@@ -25,6 +25,8 @@
                                 >Product Types</router-link>
                                 <router-link class="nav-link text-dark" to="/products/"
                                 >Products</router-link>
+                                <router-link class="nav-link text-dark" to="/prices/"
+                                >Prices</router-link>
                                 </div>
                             </li>
                         </ul>
