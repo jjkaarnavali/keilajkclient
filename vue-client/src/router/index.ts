@@ -17,6 +17,11 @@ import ProductTypeDetails from '../views/product-types/Details.vue';
 import ProductTypeCreate from '../views/product-types/Create.vue';
 import ProductTypeEdit from '../views/product-types/Edit.vue';
 import ProductTypeDelete from '../views/product-types/Delete.vue';
+import ProductIndex from '../views/products/Index.vue';
+import ProductDetails from '../views/products/Details.vue';
+import ProductCreate from '../views/products/Create.vue';
+import ProductEdit from '../views/products/Edit.vue';
+import ProductDelete from '../views/products/Delete.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -60,6 +65,12 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/product-types/create', name: 'product-types-create', component: ProductTypeCreate, },
     { path: '/product-types/edit/:id', name: 'product-types-edit', component: ProductTypeEdit, props: true },
     { path: '/product-types/delete/:id', name: 'product-types-delete', component: ProductTypeDelete, props: true },
+
+    { path: '/products/', name: 'products-index', component: ProductIndex, },
+    { path: '/products/details/:id', name: 'products-details', component: ProductDetails, props: true },
+    { path: '/products/create', name: 'products-create', component: ProductCreate, },
+    { path: '/products/edit/:id', name: 'products-edit', component: ProductEdit, props: true },
+    { path: '/products/delete/:id', name: 'products-delete', component: ProductDelete, props: true },
 
 ]
 

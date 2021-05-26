@@ -1,39 +1,34 @@
 <template>
     <header>
-        <nav
-            class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-        >
-            <div class="container">
-                <router-link class="navbar-brand" to="/">WebApp</router-link>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div
-                    class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
-                >
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <router-link class="nav-link text-dark" to="/persons/"
-                                >Persons</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link text-dark" to="/payment-types/"
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container px-4 px-lg-5">
+                    <a class="navbar-brand" href="#!">Pood</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item" asp-area="" asp-controller="ProductsPage" asp-action="Index">Products</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Shop
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <router-link class="nav-link text-dark" to="/payment-types/"
                                 >Payment Types</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link text-dark" to="/product-types/"
+                                <router-link class="nav-link text-dark" to="/persons/"
+                                >Persons</router-link>
+                                <router-link class="nav-link text-dark" to="/product-types/"
                                 >Product Types</router-link>
-                        </li>
-                    </ul>
-                    <ul v-if="token == null" class="navbar-nav">
+                                <router-link class="nav-link text-dark" to="/products/"
+                                >Products</router-link>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul v-if="token == null" class="navbar-nav">
                         <li class="nav-item">
                             <router-link
                                 to="/identity/login"
@@ -62,9 +57,23 @@
                             >
                         </li>
                     </ul>
+                        <form class="d-flex">
+                            <button class="btn btn-outline-dark" type="submit" >
+                                <i class="bi-cart-fill me-1" ></i>
+                                Cart
+                            </button>
+                        </form>
+                    </div>
                 </div>
+            </nav>
+            <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Keila JK</h1>
+                <p class="lead fw-normal text-white-50 mb-0">e-pood</p>
             </div>
-        </nav>
+        </div>
+    </header>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
