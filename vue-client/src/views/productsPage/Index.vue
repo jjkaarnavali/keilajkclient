@@ -2,7 +2,6 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                
                     <div class="col mb-5" v-for="item in products" :key="item.id">
                         <div class="card h-100">
                             <!-- Product image-->
@@ -13,7 +12,9 @@
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ item.productName }}</h5>
                                     <!-- Product price-->
-                                    @Html.DisplayFor(modelItem => item.Price)
+                                    <div v-for="price in prices" :key="price.id">
+                                        <a v-if="item.id === price.productId">{{ price.priceInEur }}</a>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -35,54 +36,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
-                
+                    </div>
             </div>
             </div>
         </section>
-    <h1>Products Index</h1>
-    <router-link :to="'/products/create/'"
-                        >Create new</router-link
-                     >
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Company ID</th>
-                <th>Producttype ID</th>
-                <th>ProductName</th>
-                <th>ProductSize</th>
-                <th>ProductSeason</th>
-                <th>ProductCode</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in products" :key="item.id">
-                <td>{{ item.companyId }}</td>
-                <td>{{ item.productTypeId }}</td>
-                <td>{{ item.productName }}</td>
-                <td>{{ item.productSize }}</td>
-                <td>{{ item.productSeason }}</td>
-                <td>{{ item.productCode }}</td>
-                <td>
-                    <router-link :to="'/products/details/' + item.id"
-                        >Details</router-link
-                    >
-                    <template v-if="isUserLoggedIn">
-                        |
-                        <router-link :to="'/products/edit/' + item.id"
-                            >Edit</router-link
-                        >
-                        |
-                        <router-link :to="'/products/delete/' + item.id"
-                            >Delete</router-link
-                        >
-                    </template>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </template>
 
 <script lang="ts">
@@ -90,17 +48,18 @@ import { Options, Vue } from "vue-class-component";
 import store from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
+import { IPrice } from "@/domain/IPrice";
 
 @Options({
     components: {},
     props: {},
 })
-export default class ProductIndex extends Vue {
+export default class ProductsPageIndex extends Vue {
     products: IProduct[] | null = null;
+    prices: IPrice[] | null = null;
 
-    async addToCart(event: Event): Promise<void> {
-        
-    }
+    /* async addToCart(event: Event): Promise<void> {
+    } */
 
     get isUserLoggedIn(): boolean {
         return store.state.token != null;
@@ -126,6 +85,13 @@ export default class ProductIndex extends Vue {
         );
         service.getAll().then((data) => {
             this.products = data.data!;
+        });
+        const service2 = new BaseService<IPrice>(
+            "https://localhost:5001/api/v1/Prices",
+            store.state.token ? store.state.token : undefined
+        );
+        service2.getAll().then((data) => {
+            this.prices = data.data!;
         });
     }
 
