@@ -27,6 +27,7 @@ import PriceDetails from '../views/prices/Details.vue';
 import PriceCreate from '../views/prices/Create.vue';
 import PriceEdit from '../views/prices/Edit.vue';
 import PriceDelete from '../views/prices/Delete.vue';
+import ProductsPageIndex from '../views/productsPage/Index.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -52,6 +53,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/identity/register',
         name: 'identity-register',
         component: Register,
+    },
+    {
+        path: '/productsPage/Index',
+        name: 'productsPage-Index',
+        component: ProductsPageIndex,
     },
     { path: '/persons/', name: 'persons-index', component: PersonIndex, },
     { path: '/persons/details/:id', name: 'persons-details', component: PersonDetails, props: true },

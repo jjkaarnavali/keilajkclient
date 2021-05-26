@@ -10,7 +10,8 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="dropdown-item" asp-area="" asp-controller="ProductsPage" asp-action="Index">Products</a>
+                                <router-link class="nav-link text-dark" to="/productsPage/Index/"
+                                >Products</router-link>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

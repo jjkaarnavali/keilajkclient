@@ -10,19 +10,19 @@
                 <input
                     class="form-control"
                     id="Input_ProductId"
-                    v-model="productId"
+                    v-model="price.productId"
                 />
                 <label  for="discountId">Discount Id</label>
                 <input
                     class="form-control"
                     id="Input_DiscountId"
-                    v-model="discountId"
+                    v-model="price.discountId"
                 />
                 <label  for="priceInEur">Price</label>
                 <input
                     class="form-control"
                     id="Input_PriceInEur"
-                    v-model="priceInEur"
+                    v-model="price.priceInEur"
                 />
             </div>
             <div class="form-group">
@@ -100,6 +100,8 @@ export default class PricesEdit extends Vue {
             this.price.productId = data.data!.productId;
             this.price.discountId = data.data!.discountId;
             this.price.priceInEur = data.data!.priceInEur;
+            console.log(data.data!.productId);
+            console.log(this.price.productId);
         });
     }
 

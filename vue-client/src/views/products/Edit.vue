@@ -10,37 +10,37 @@
                 <input
                     class="form-control"
                     id="Input_companyId"
-                    v-model="companyId"
+                    v-model="product.companyId"
                 />
                 <label  for="productTypeId">ProductType Id</label>
                 <input
                     class="form-control"
                     id="Input_productTypeId"
-                    v-model="productTypeId"
+                    v-model="product.productTypeId"
                 />
                 <label  for="productName">Product Name</label>
                 <input
                     class="form-control"
                     id="Input_productName"
-                    v-model="productName"
+                    v-model="product.productName"
                 />
                 <label  for="productSize">Product Size</label>
                 <input
                     class="form-control"
                     id="Input_productSize"
-                    v-model="productSize"
+                    v-model="product.productSize"
                 />
                 <label  for="productSeason">Product Season</label>
                 <input
                     class="form-control"
                     id="Input_productSeason"
-                    v-model="productSeason"
+                    v-model="product.productSeason"
                 />
                 <label  for="productCode">Product Code</label>
                 <input
                     class="form-control"
                     id="Input_productCode"
-                    v-model="productCode"
+                    v-model="product.productCode"
                 />
             </div>
             <div class="form-group">
