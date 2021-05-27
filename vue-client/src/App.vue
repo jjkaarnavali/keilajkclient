@@ -30,6 +30,8 @@
                                 >Prices</router-link>
                                 <router-link class="nav-link text-dark" to="/orders/"
                                 >Orders</router-link>
+                                <router-link class="nav-link text-dark" to="/productsInOrders/"
+                                >Products In Orders</router-link>
                                 </div>
                             </li>
                         </ul>

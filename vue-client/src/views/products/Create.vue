@@ -69,7 +69,7 @@ import { IProduct } from "@/domain/IProduct";
     components: {},
     props: {},
 })
-export default class ProductCreate extends Vue {
+export default class ProductsCreate extends Vue {
     id: undefined;
     companyId: string = "";
     productTypeId: string = "";
