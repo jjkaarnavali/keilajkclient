@@ -28,6 +28,8 @@
                                 >Products</router-link>
                                 <router-link class="nav-link text-dark" to="/prices/"
                                 >Prices</router-link>
+                                <router-link class="nav-link text-dark" to="/orders/"
+                                >Orders</router-link>
                                 </div>
                             </li>
                         </ul>
