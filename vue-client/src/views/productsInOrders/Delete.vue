@@ -50,7 +50,8 @@ export default class ProductsInOrdersDelete extends Vue {
         id: "",
         productId: "",
         orderId: "",
-        productAmount: ""
+        productAmount: "",
+        until: undefined
     };
 
     async deleteClicked(event: Event): Promise<void> {
@@ -67,7 +68,9 @@ export default class ProductsInOrdersDelete extends Vue {
             orderId:
             this.productInOrder.orderId,
             productAmount:
-            this.productInOrder.productAmount
+            this.productInOrder.productAmount,
+            until:
+            undefined
         };
 
         console.log(objToDelete);
@@ -103,6 +106,7 @@ export default class ProductsInOrdersDelete extends Vue {
             this.productInOrder.productId = data.data!.productId;
             this.productInOrder.orderId = data.data!.orderId;
             this.productInOrder.productAmount = data.data!.productAmount;
+            this.productInOrder.until = data.data!.until;
         });
     }
 

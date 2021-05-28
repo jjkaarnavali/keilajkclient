@@ -59,7 +59,8 @@ export default class ProductsInOrdersEdit extends Vue {
         id: "",
         productId: "",
         orderId: "",
-        productAmount: ""
+        productAmount: "",
+        until: undefined
     };
 
     async saveClicked(event: Event): Promise<void> {
@@ -76,7 +77,9 @@ export default class ProductsInOrdersEdit extends Vue {
             orderId:
             this.productInOrder.orderId,
             productAmount:
-            this.productInOrder.productAmount
+            this.productInOrder.productAmount,
+            until:
+            undefined
         };
 
         console.log(objToEdit);
@@ -100,6 +103,7 @@ export default class ProductsInOrdersEdit extends Vue {
             this.productInOrder.productId = data.data!.productId;
             this.productInOrder.orderId = data.data!.orderId;
             this.productInOrder.productAmount = data.data!.productAmount;
+            this.productInOrder.until = data.data!.until;
         });
     }
 

@@ -1,30 +1,51 @@
 <template>
     <section class="py-5">
-                <div class="container px-4 px-lg-5 mt-5">
-                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col-md-6">
-                        <h1 class="display-5 fw-bolder">{{product.productName}}</h1>
-                        <div class="fs-5 mb-5" v-for="price in prices" :key="price.id">
-                            <span v-if="product.id === price.productId">
-                                {{ price.priceInEur }} euros
-                            </span>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Product name
+                    </th>
+                    <th>
+                        Product amount
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody v-for="product in products" :key="product.id">
+                    <tr>
+                    <th>
+                        <a>{{product.productName}}</a>
+                    </th>
+                    <th v-for="productInOrder in productsInOrders" :key="productInOrder.id">
+                        <a v-if="productInOrder.productId === product.id">{{productInOrder.ProductAmount}}</a>
+                    </th>
+                    <th v-for="price in prices" :key="price.id">
+
+                        <div v-for="productInOrder in productsInOrders" :key="productInOrder.id">
+                            <a v-if="product.id === price.productId && price.until == null && productInOrder.productId === product.id">{{price.priceInEur * productInOrder.productAmount}}</a>
                         </div>
-                        <p class="lead">{{product.productSize}}</p>
-                        <p class="lead">{{product.productSeason}}</p>
-                        <div class="d-flex">
-                            <input  class="form-control text-center me-3" id="amount" name="amount" type="num" value="1" style="max-width: 3rem"/>
-                            <button
-                                    @click="addToCart($event, product.id)"
-                                    type="submit"
-                                    class="btn btn-primary"
-                                >
-                                Add to cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </th>
+                    <th v-for="productInOrder in productsInOrders" :key="productInOrder.id">
+                        <button
+                            @click="remove($event, productInOrder.id)"
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Remove
+                        </button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+
+        <a>{{totalprice}}</a>
+
+        <a asp-controller="SelectPersonPage" asp-action="Index" asp-route-total="@Model.totalPrice">Purchase</a>
+    </section>
 </template>
 
 <script lang="ts">
@@ -45,7 +66,15 @@ import { IProductInOrder } from "@/domain/IProductInOrder";
 export default class ProductDetailsPageIndex extends Vue {
     id!: string;
     products: IProduct[] | null = null;
+    productsInOrders: IProductInOrder[] | null = null;
     prices: IPrice[] | null = null;
+
+    usersProducts: IProduct[] | null = null;
+    usersProductsInOrders: IProductInOrder[] | null = null;
+    usersPrices: IPrice[] | null = null;
+
+    totalprice: string | undefined;
+
     orders: IOrder[] | null = null;
     product: IProduct = {
         id: "",
@@ -56,87 +85,6 @@ export default class ProductDetailsPageIndex extends Vue {
         productSeason: "",
         productCode: ""
     };
-
-    async addToCart(event: Event, id: string): Promise<void> {
-        console.log(id);
-        console.log(event);
-        console.log(document.querySelector('input')?.value);
-        var amount = document.querySelector('input')?.value;
-
-        const ordersService = new BaseService<IOrder>(
-            "https://localhost:5001/api/v1/Orders",
-            store.state.token ? store.state.token : undefined
-        );
-
-        var token = store.state.token;
-        var base64Url = token!.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        var decodedToken = JSON.parse(jsonPayload);
-        var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-        console.log(this.orders);
-
-        ordersService.getAll().then((data) => {
-            console.log("data");
-            console.log(data.data);
-            this.orders = data.data!;
-            console.log(this.orders);
-            var activeOrder = false;
-
-            this.orders!.forEach(order => {
-                if (order.userId === userId && order.until === null) {
-                    activeOrder = true
-                }
-            });
-            console.log(activeOrder);
-
-            if (activeOrder === false) {
-                const objToCreate: IOrder = {
-                    id:
-                    undefined,
-                    userId:
-                    userId,
-                    until:
-                    undefined
-                };
-
-                const response = ordersService.post(objToCreate);
-                console.log(response);
-            }
-
-            const productInOrderService = new BaseService<IProductInOrder>(
-                "https://localhost:5001/api/v1/ProductsInOrders",
-                store.state.token ? store.state.token : undefined
-            );
-            this.orders!.forEach(order => {
-                if (order.userId === userId && order.until === null) {
-                    const inOrderObjToCreate: IProductInOrder = {
-                        id:
-                        undefined,
-                        productId:
-                        id,
-                        orderId:
-                        order.id!,
-                        productAmount:
-                        amount!
-                    };
-                    const response = productInOrderService.post(inOrderObjToCreate);
-
-                    console.log(response);
-                }
-            });
-        });
-
-        /* this.orders!.forEach(order => {
-            if (order.userId === userId && order.until === null) {
-                activeOrder = true
-            }
-            console.log(order)
-        }); */
-    }
 
     get isUserLoggedIn(): boolean {
         return store.state.token != null;
@@ -162,16 +110,9 @@ export default class ProductDetailsPageIndex extends Vue {
         );
         // console.log(this.id);
         console.log("lmao");
-        service.get(this.id).then((data) => {
-            console.log(data);
-            this.product.id = data.data!.id;
-            this.product.companyId = data.data!.companyId;
-            this.product.productTypeId = data.data!.productTypeId;
-            this.product.productName = data.data!.productName;
-            this.product.productSize = data.data!.productSize;
-            this.product.productSeason = data.data!.productSeason;
-            this.product.productCode = data.data!.productCode;
-            console.log(this.product);
+        service.getAll().then((data) => {
+            this.products = data.data!;
+            console.log(this.prices);
         });
         const service2 = new BaseService<IPrice>(
             "https://localhost:5001/api/v1/Prices",
@@ -180,6 +121,84 @@ export default class ProductDetailsPageIndex extends Vue {
         service2.getAll().then((data) => {
             this.prices = data.data!;
             console.log(this.prices);
+        });
+
+        const service3 = new BaseService<IProductInOrder>(
+            "https://localhost:5001/api/v1/ProductsInOrders",
+            store.state.token ? store.state.token : undefined
+        );
+        service3.getAll().then((data) => {
+            this.productsInOrders = data.data!;
+            console.log(this.productsInOrders);
+        });
+
+        const service4 = new BaseService<IOrder>(
+            "https://localhost:5001/api/v1/Orders",
+            store.state.token ? store.state.token : undefined
+        );
+        service4.getAll().then((data) => {
+            this.orders = data.data!;
+            console.log(this.orders);
+        });
+
+        var token = store.state.token;
+        var base64Url = token!.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        var decodedToken = JSON.parse(jsonPayload);
+        var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
+        const usersOrder: IOrder = {
+            id:
+            undefined,
+            userId:
+            userId,
+            until:
+            undefined
+        };
+
+        // Find the users order
+        this.orders!.forEach(order => {
+            if (order.userId === userId && order.until === undefined) {
+                usersOrder.id = order.id;
+            }
+        });
+
+        // Find the productsInOrders that are for users order
+        this.usersProductsInOrders = this.productsInOrders!.filter(x => x.orderId === usersOrder.id && x.until === undefined);
+
+        // Find the products
+        this.usersProductsInOrders!.forEach(productInOrder => {
+            this.products!.forEach(product => {
+                if (productInOrder.productId === product.id) {
+                    this.usersProducts?.push(product);
+                }
+            });
+        });
+
+        // Find the prices
+        this.usersProducts!.forEach(product => {
+            this.prices!.forEach(price => {
+                if (price.productId === product.id && !price.until) {
+                    this.usersPrices?.push(price);
+                }
+            });
+        });
+
+        // Find total price
+        this.totalprice = "0";
+        this.usersProducts!.forEach(product => {
+            this.usersPrices!.forEach(price => {
+                this.usersProductsInOrders!.forEach(productInOrder => {
+                    if (product.id === price.productId && price.until === undefined && productInOrder.productId === product.id) {
+                        const priceT = parseInt(this.totalprice!) + parseInt(price.priceInEur) * parseInt(productInOrder.productAmount);
+                        this.totalprice = priceT.toString();
+                    }
+                });
+            });
         });
     }
 

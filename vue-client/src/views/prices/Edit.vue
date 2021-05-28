@@ -59,7 +59,8 @@ export default class PricesEdit extends Vue {
         id: "",
         productId: "",
         discountId: "",
-        priceInEur: ""
+        priceInEur: "",
+        until: undefined
     };
 
     async saveClicked(event: Event): Promise<void> {
@@ -76,7 +77,9 @@ export default class PricesEdit extends Vue {
             discountId:
             this.price.discountId,
             priceInEur:
-            this.price.priceInEur
+            this.price.priceInEur,
+            until:
+            undefined
         };
 
         console.log(objToEdit);
@@ -100,6 +103,7 @@ export default class PricesEdit extends Vue {
             this.price.productId = data.data!.productId;
             this.price.discountId = data.data!.discountId;
             this.price.priceInEur = data.data!.priceInEur;
+            this.price.until = data.data!.until;
             console.log(data.data!.productId);
             console.log(this.price.productId);
         });

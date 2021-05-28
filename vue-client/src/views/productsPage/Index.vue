@@ -120,7 +120,9 @@ export default class ProductsPageIndex extends Vue {
                         orderId:
                         order.id!,
                         productAmount:
-                        "1"
+                        "1",
+                        until:
+                        undefined
                     };
                     const response = productInOrderService.post(inOrderObjToCreate);
 

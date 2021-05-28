@@ -56,6 +56,7 @@ export default class PriceCreate extends Vue {
     productId: string = "";
     discountId: string = "";
     priceInEur: string = "";
+    until: undefined
 
     async createClicked(event: Event): Promise<void> {
         const service = new BaseService<IPrice>(
@@ -71,7 +72,9 @@ export default class PriceCreate extends Vue {
             discountId:
             this.discountId,
             priceInEur:
-            this.priceInEur
+            this.priceInEur,
+            until:
+            undefined
         };
 
         console.log(objToCreate);

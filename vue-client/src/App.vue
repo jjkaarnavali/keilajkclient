@@ -67,7 +67,11 @@
                         <form class="d-flex">
                             <button class="btn btn-outline-dark" type="submit" >
                                 <i class="bi-cart-fill me-1" ></i>
-                                Cart
+                                <router-link
+                                to="/CartPage/Index"
+                                class="nav-link text-dark"
+                                >Cart</router-link
+                                >
                             </button>
                         </form>
                     </div>

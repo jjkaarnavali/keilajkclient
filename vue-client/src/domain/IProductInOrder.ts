@@ -3,4 +3,5 @@ export interface IProductInOrder{
     productId: string;
     orderId: string;
     productAmount: string;
+    until: string | undefined;
 }

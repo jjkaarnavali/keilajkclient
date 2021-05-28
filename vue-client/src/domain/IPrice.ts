@@ -3,4 +3,5 @@ export interface IPrice{
     productId: string;
     discountId: string;
     priceInEur: string;
+    until: string | undefined;
 }

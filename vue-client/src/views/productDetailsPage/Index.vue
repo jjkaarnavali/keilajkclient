@@ -121,7 +121,9 @@ export default class ProductDetailsPageIndex extends Vue {
                         orderId:
                         order.id!,
                         productAmount:
-                        amount!
+                        amount!,
+                        until:
+                        undefined
                     };
                     const response = productInOrderService.post(inOrderObjToCreate);
 

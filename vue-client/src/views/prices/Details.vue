@@ -45,7 +45,8 @@ export default class PricesDetails extends Vue {
         id: "",
         productId: "",
         discountId: "",
-        priceInEur: ""
+        priceInEur: "",
+        until: undefined
     };
 
     beforeCreate(): void {

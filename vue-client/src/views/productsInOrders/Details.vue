@@ -51,7 +51,8 @@ export default class ProductsInOrdersDetails extends Vue {
         id: "",
         productId: "",
         orderId: "",
-        productAmount: ""
+        productAmount: "",
+        until: undefined
     };
 
     beforeCreate(): void {
@@ -80,6 +81,7 @@ export default class ProductsInOrdersDetails extends Vue {
             this.productInOrder.productId = data.data!.productId;
             this.productInOrder.orderId = data.data!.orderId;
             this.productInOrder.productAmount = data.data!.productAmount;
+            this.productInOrder.until = data!.data!.until;
         });
     }
 

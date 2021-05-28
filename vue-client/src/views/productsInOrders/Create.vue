@@ -55,6 +55,7 @@ export default class ProductsInOrdersCreate extends Vue {
     productId: string = "";
     orderId: string = "";
     productAmount: string = "";
+    until: undefined;
 
     async createClicked(event: Event): Promise<void> {
         const service = new BaseService<IProductInOrder>(
@@ -70,7 +71,9 @@ export default class ProductsInOrdersCreate extends Vue {
             orderId:
             this.orderId,
             productAmount:
-            this.productAmount
+            this.productAmount,
+            until:
+            undefined
         };
 
         console.log(objToCreate);
