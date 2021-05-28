@@ -1,42 +1,28 @@
 <template>
     <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5" v-for="item in products" :key="item.id">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ item.productName }}</h5>
-                                    <!-- Product price-->
-                                    <div v-for="price in prices" :key="price.id">
-                                        <a v-if="item.id === price.productId">{{ price.priceInEur }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><router-link :to="'/productDetailsPage/Index/' + item.id"
-                        >View</router-link>
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col-md-6">
+                        <h1 class="display-5 fw-bolder">{{product.productName}}</h1>
+                        <div class="fs-5 mb-5" v-for="price in prices" :key="price.id">
+                            <span v-if="product.id === price.productId">
+                                {{ price.priceInEur }} euros
+                            </span>
                         </div>
-                            </div>
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="form-group">
-                                    <button
-                                        @click="addToCart($event, item.id)"
-                                        type="submit"
-                                        class="btn btn-primary"
-                                    >
-                                    Add to cart
-                                    </button>
-                                </div>
-                            </div>
+                        <p class="lead">{{product.productSize}}</p>
+                        <p class="lead">{{product.productSeason}}</p>
+                        <div class="d-flex">
+                            <input  class="form-control text-center me-3" id="amount" name="amount" type="num" value="1" style="max-width: 3rem"/>
+                            <button
+                                    @click="addToCart($event, product.id)"
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+                                Add to cart
+                            </button>
+                        </div>
                     </div>
-                    </div>
-            </div>
+                </div>
             </div>
         </section>
 </template>
@@ -52,16 +38,31 @@ import { IProductInOrder } from "@/domain/IProductInOrder";
 
 @Options({
     components: {},
-    props: {},
+    props: {
+        id: String,
+    },
 })
-export default class ProductsPageIndex extends Vue {
+export default class ProductDetailsPageIndex extends Vue {
+    id!: string;
     products: IProduct[] | null = null;
     prices: IPrice[] | null = null;
     orders: IOrder[] | null = null;
+    product: IProduct = {
+        id: "",
+        companyId: "",
+        productTypeId: "",
+        productName: "",
+        productSize: "",
+        productSeason: "",
+        productCode: ""
+    };
 
     async addToCart(event: Event, id: string): Promise<void> {
         console.log(id);
         console.log(event);
+        console.log(document.querySelector('input')?.value);
+        var amount = document.querySelector('input')?.value;
+
         const ordersService = new BaseService<IOrder>(
             "https://localhost:5001/api/v1/Orders",
             store.state.token ? store.state.token : undefined
@@ -120,7 +121,7 @@ export default class ProductsPageIndex extends Vue {
                         orderId:
                         order.id!,
                         productAmount:
-                        "1"
+                        amount!
                     };
                     const response = productInOrderService.post(inOrderObjToCreate);
 
@@ -159,8 +160,18 @@ export default class ProductsPageIndex extends Vue {
             "https://localhost:5001/api/v1/Products",
             store.state.token ? store.state.token : undefined
         );
-        service.getAll().then((data) => {
-            this.products = data.data!;
+        // console.log(this.id);
+        console.log("lmao");
+        service.get(this.id).then((data) => {
+            console.log(data);
+            this.product.id = data.data!.id;
+            this.product.companyId = data.data!.companyId;
+            this.product.productTypeId = data.data!.productTypeId;
+            this.product.productName = data.data!.productName;
+            this.product.productSize = data.data!.productSize;
+            this.product.productSeason = data.data!.productSeason;
+            this.product.productCode = data.data!.productCode;
+            console.log(this.product);
         });
         const service2 = new BaseService<IPrice>(
             "https://localhost:5001/api/v1/Prices",
@@ -168,6 +179,7 @@ export default class ProductsPageIndex extends Vue {
         );
         service2.getAll().then((data) => {
             this.prices = data.data!;
+            console.log(this.prices);
         });
     }
 

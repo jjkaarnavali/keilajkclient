@@ -9,13 +9,13 @@
             Product
         </dt>
         <dd class="col-sm-8">
-            {{product.productName}}
+            {{ product.productName }}
         </dd>
         <dt class="col-sm-4">
             Id
         </dt>
         <dd class="col-sm-8">
-            {{product.Id}}
+            {{ product.Id }}
         </dd>
     </dl>
     </div>
@@ -70,7 +70,7 @@ export default class ProductsDetails extends Vue {
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);
-        console.log("lmao");
+        // console.log("lmao");
         service.get(this.id).then((data) => {
             console.log(data);
             this.product.id = data.data!.id;
@@ -80,6 +80,7 @@ export default class ProductsDetails extends Vue {
             this.product.productSize = data.data!.productSize;
             this.product.productSeason = data.data!.productSeason;
             this.product.productCode = data.data!.productCode;
+            console.log(this.product);
         });
     }
 
