@@ -43,7 +43,8 @@ export default class OrdersDetails extends Vue {
     id!: string;
     order: IOrder = {
         id: "",
-        userId: ""
+        userId: "",
+        until: undefined
     };
 
     beforeCreate(): void {

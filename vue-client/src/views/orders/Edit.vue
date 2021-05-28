@@ -45,7 +45,8 @@ export default class OrdersEdit extends Vue {
     id!: string;
     order: IOrder = {
         id: "",
-        userId: ""
+        userId: "",
+        until: undefined
     };
 
     async saveClicked(event: Event): Promise<void> {
@@ -58,7 +59,9 @@ export default class OrdersEdit extends Vue {
             id:
             this.order.id,
             userId:
-            this.order.userId
+            this.order.userId,
+            until:
+            undefined
         };
 
         console.log(objToEdit);

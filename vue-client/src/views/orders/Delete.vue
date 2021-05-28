@@ -42,7 +42,8 @@ export default class OrdersDelete extends Vue {
     id!: string;
     order: IOrder = {
         id: "",
-        userId: ""
+        userId: "",
+        until: undefined
     };
 
     async deleteClicked(event: Event): Promise<void> {
@@ -55,7 +56,9 @@ export default class OrdersDelete extends Vue {
             id:
             this.order.id,
             userId:
-            this.order.userId
+            this.order.userId,
+            until:
+            undefined
         };
 
         console.log(objToDelete);

@@ -53,7 +53,9 @@ export default class OrdersCreate extends Vue {
             id:
             this.id,
             userId:
-            this.userId
+            this.userId,
+            until:
+            undefined
         };
 
         console.log(objToCreate);

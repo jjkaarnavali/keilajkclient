@@ -26,10 +26,8 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="form-group">
                                     <button
-                                        @click="addToCart($event)"
+                                        @click="addToCart($event, item.id)"
                                         type="submit"
-                                        amount= "1"
-                                        id= {{ item.id }}
                                         class="btn btn-primary"
                                     >
                                     Add to cart
@@ -49,6 +47,8 @@ import store from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
+import { IOrder } from "@/domain/IOrder";
+import { IProductInOrder } from "@/domain/IProductInOrder";
 
 @Options({
     components: {},
@@ -57,9 +57,85 @@ import { IPrice } from "@/domain/IPrice";
 export default class ProductsPageIndex extends Vue {
     products: IProduct[] | null = null;
     prices: IPrice[] | null = null;
+    orders: IOrder[] | null = null;
 
-    /* async addToCart(event: Event): Promise<void> {
-    } */
+    async addToCart(event: Event, id: string): Promise<void> {
+        console.log(id);
+        console.log(event);
+        const ordersService = new BaseService<IOrder>(
+            "https://localhost:5001/api/v1/Orders",
+            store.state.token ? store.state.token : undefined
+        );
+
+        var token = store.state.token;
+        var base64Url = token!.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        var decodedToken = JSON.parse(jsonPayload);
+        var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+        console.log(this.orders);
+
+        ordersService.getAll().then((data) => {
+            console.log("data");
+            console.log(data.data);
+            this.orders = data.data!;
+            console.log(this.orders);
+            var activeOrder = false;
+
+            this.orders!.forEach(order => {
+                if (order.userId === userId && order.until === null) {
+                    activeOrder = true
+                }
+            });
+            console.log(activeOrder);
+
+            if (activeOrder === false) {
+                const objToCreate: IOrder = {
+                    id:
+                    undefined,
+                    userId:
+                    userId,
+                    until:
+                    undefined
+                };
+
+                const response = ordersService.post(objToCreate);
+                console.log(response);
+            }
+
+            const productInOrderService = new BaseService<IProductInOrder>(
+                "https://localhost:5001/api/v1/ProductsInOrders",
+                store.state.token ? store.state.token : undefined
+            );
+            this.orders!.forEach(order => {
+                if (order.userId === userId && order.until === null) {
+                    const inOrderObjToCreate: IProductInOrder = {
+                        id:
+                        undefined,
+                        productId:
+                        id,
+                        orderId:
+                        order.id!,
+                        productAmount:
+                        "1"
+                    };
+                    const response = productInOrderService.post(inOrderObjToCreate);
+
+                    console.log(response);
+                }
+            });
+        });
+
+        /* this.orders!.forEach(order => {
+            if (order.userId === userId && order.until === null) {
+                activeOrder = true
+            }
+            console.log(order)
+        }); */
+    }
 
     get isUserLoggedIn(): boolean {
         return store.state.token != null;
