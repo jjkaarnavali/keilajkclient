@@ -204,12 +204,16 @@ export default class ProductDetailsPageIndex extends Vue {
                         console.log(this.usersPrices);
                         // Find total price
                         this.totalprice = "0";
+                        console.log("this.totalprice");
+                        console.log(this.totalprice);
                         this.usersProducts!.forEach(product => {
                             this.usersPrices!.forEach(price => {
                                 this.usersProductsInOrders!.forEach(productInOrder => {
-                                    if (product.id === price.productId && price.until === undefined && productInOrder.productId === product.id) {
+                                    if (product.id === price.productId && !price.until && productInOrder.productId === product.id) {
                                         const priceT = parseInt(this.totalprice!) + parseInt(price.priceInEur) * parseInt(productInOrder.productAmount);
                                         this.totalprice = priceT.toString();
+                                        console.log(priceT);
+                                        console.log(this.totalprice);
                                     }
                                 });
                             });

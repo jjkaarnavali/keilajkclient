@@ -47,6 +47,7 @@ export default class ProductDetailsPageIndex extends Vue {
     products: IProduct[] | null = null;
     prices: IPrice[] | null = null;
     orders: IOrder[] | null = null;
+    productsInOrders: IProductInOrder[] | null = null;
     product: IProduct = {
         id: "",
         companyId: "",
@@ -85,6 +86,8 @@ export default class ProductDetailsPageIndex extends Vue {
             this.orders = data.data!;
             console.log(this.orders);
             var activeOrder = false;
+            var activeOrderId = '';
+            var productWasUpdated = false;
 
             this.orders!.forEach(order => {
                 if (order.userId === userId && order.until === null) {
@@ -113,21 +116,42 @@ export default class ProductDetailsPageIndex extends Vue {
             );
             this.orders!.forEach(order => {
                 if (order.userId === userId && order.until === null) {
-                    const inOrderObjToCreate: IProductInOrder = {
-                        id:
-                        undefined,
-                        productId:
-                        id,
-                        orderId:
-                        order.id!,
-                        productAmount:
-                        amount!,
-                        until:
-                        undefined
-                    };
-                    const response = productInOrderService.post(inOrderObjToCreate);
+                    activeOrderId = order.id!;
+                }
+            })
 
-                    console.log(response);
+            productInOrderService.getAll().then((data) => {
+                this.productsInOrders = data!.data!;
+
+                this.productsInOrders!.forEach(productInOrder => {
+                    if (productInOrder.productId === id && productInOrder.orderId === activeOrderId && !productInOrder.until) {
+                        var updatedProductInOrder = productInOrder;
+                        updatedProductInOrder.productAmount = (parseInt(updatedProductInOrder.productAmount) + parseInt(amount!)).toString();
+                        productInOrderService.put(updatedProductInOrder);
+                        productWasUpdated = true;
+                    }
+                })
+
+                if (!productWasUpdated) {
+                        this.orders!.forEach(order => {
+                            if (order.userId === userId && order.until === null) {
+                                const inOrderObjToCreate: IProductInOrder = {
+                                    id:
+                                    undefined,
+                                    productId:
+                                    id,
+                                    orderId:
+                                    order.id!,
+                                    productAmount:
+                                    "1",
+                                    until:
+                                    undefined
+                                };
+                                const response = productInOrderService.post(inOrderObjToCreate);
+
+                                console.log(response);
+                            }
+                        });
                 }
             });
         });
