@@ -40,7 +40,11 @@
                             type="submit"
                             class="btn btn-primary"
                         >
-                            Remove
+                            <router-link
+                                to="/CartPage/Index"
+                                class="nav-link text-light"
+                                >Remove</router-link
+                            >
                         </button>
                         </div>
                     </th>
@@ -91,6 +95,20 @@ export default class ProductDetailsPageIndex extends Vue {
         productSeason: "",
         productCode: ""
     };
+
+    async remove(event: Event, id: string): Promise<void> {
+        const productInOrderService = new BaseService<IProductInOrder>(
+            "https://localhost:5001/api/v1/ProductsInOrders",
+            store.state.token ? store.state.token : undefined
+        );
+
+        var productInOrderToRemove = (await productInOrderService.get(id)).data;
+        console.log(productInOrderToRemove);
+        var today = new Date();
+        productInOrderToRemove!.until = today.toString();
+        console.log(productInOrderToRemove!.until);
+        await productInOrderService.delete(productInOrderToRemove!);
+    }
 
     get isUserLoggedIn(): boolean {
         return store.state.token != null;
