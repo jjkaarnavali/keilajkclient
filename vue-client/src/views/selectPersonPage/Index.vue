@@ -35,6 +35,16 @@
                 <td>
                     <a asp-controller="PurchasePage" asp-action="Index" asp-route-personId="@item.Id">Select</a> |
                     <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        <router-link
+                            :to="'/purchasePage/Index/' + person.id"
+                            class="nav-link text-light"
+                            >Select</router-link
+                        >
+                    </button>
+                    <button
                         @click="remove($event, person.id)"
                         type="submit"
                         class="btn btn-primary"

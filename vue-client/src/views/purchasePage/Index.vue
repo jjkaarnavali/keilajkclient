@@ -1,0 +1,254 @@
+<template>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentTypeName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentTypeName)
+                </td>
+                <td>
+                    <a asp-controller="PurchaseReceivedPage" asp-action="Index" asp-route-id="@item.Id">@Resources.Base.Common.Buy</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>
+
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import store from "@/store/index";
+import { BaseService } from "@/services/base-service";
+import { IProduct } from "@/domain/IProduct";
+import { IPrice } from "@/domain/IPrice";
+import { IOrder } from "@/domain/IOrder";
+import { IBill } from "@/domain/IBill";
+import { ILineOnBill } from "@/domain/ILineOnBill";
+import { IProductInOrder } from "@/domain/IProductInOrder";
+
+@Options({
+    components: {},
+    props: {
+        id: String,
+    },
+})
+export default class PurchasePageIndex extends Vue {
+    id!: string;
+    products: IProduct[] | null = null;
+    linesOnBills: ILineOnBill[] | null = null;
+    billsLinesOnBills: ILineOnBill[] | null = null;
+    prices: IPrice[] | null = null;
+    orders: IOrder[] | null = null;
+    bills: IBill[] | null = null;
+    productsInOrders: IProductInOrder[] | null = null;
+    today = new Date();
+    bill: IBill = {
+        id: "",
+        personId: "",
+        userId: "",
+        orderId: "",
+        billNr: "",
+        creationTime: this.today.toString(),
+        priceWithoutTax: 0,
+        sumOfTax: 0,
+        priceToPay: 0
+    };
+
+    currentOrder: IOrder = {
+        id: "",
+        userId: "",
+        until: ""
+    };
+
+    get isUserLoggedIn(): boolean {
+        return store.state.token != null;
+    }
+
+    beforeCreate(): void {
+        console.log("beforeCreate");
+    }
+
+    created(): void {
+        console.log("created");
+    }
+
+    async beforeMount(): Promise<void> {
+        console.log("beforeMount");
+        const orderService = new BaseService<IOrder>(
+            "https://localhost:5001/api/v1/Orders",
+            store.state.token ? store.state.token : undefined
+        );
+
+        var token = store.state.token;
+        var base64Url = token!.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        var decodedToken = JSON.parse(jsonPayload);
+        var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
+        await orderService.getAll().then((data) => {
+            this.orders = data.data!;
+        });
+        this.orders!.forEach(order => {
+            if (order.userId === userId && !order.until) {
+                this.bill.orderId = order.id!;
+                this.currentOrder = order;
+            }
+        });
+        this.bill.personId = this.id;
+        this.bill.userId = userId;
+        console.log("this.id");
+        console.log(this.id);
+        this.bill.priceWithoutTax = 0;
+        this.bill.priceToPay = 0;
+        this.bill.sumOfTax = 0;
+
+        const billService = new BaseService<IBill>(
+            "https://localhost:5001/api/v1/Bills",
+            store.state.token ? store.state.token : undefined
+        );
+        console.log("this.bill");
+        console.log(this.bill);
+        console.log("post empty bill");
+        await billService.post(this.bill);
+
+        await billService.getAll().then((data) => {
+            this.bills = data!.data!;
+        })
+
+        console.log("siin peab olema just tehtud bill");
+        console.log(this.bills);
+        this.bills!.forEach(bill => {
+            if (bill.orderId === this.currentOrder.id) {
+                this.bill = bill;
+            }
+        });
+        console.log("tahaks naha bill id")
+        console.log(this.bill);
+
+        const productInOrderService = new BaseService<IProductInOrder>(
+            "https://localhost:5001/api/v1/ProductsInOrders",
+            store.state.token ? store.state.token : undefined
+        );
+        await productInOrderService.getAll().then((data) => {
+            this.productsInOrders = data!.data!;
+        })
+        const lineOnBillService = new BaseService<ILineOnBill>(
+            "https://localhost:5001/api/v1/LinesOnBills",
+            store.state.token ? store.state.token : undefined
+        );
+        const priceService = new BaseService<IPrice>(
+            "https://localhost:5001/api/v1/Prices",
+            store.state.token ? store.state.token : undefined
+        );
+        await priceService.getAll().then((data) => {
+            this.prices = data!.data!;
+        })
+
+        this.productsInOrders!.forEach(productInOrder => {
+            this.prices!.forEach(price => {
+                if (productInOrder.orderId === this.currentOrder.id && !productInOrder.until && price.productId === productInOrder.productId && !price.until) {
+                    var lineOnBill: ILineOnBill = {
+                        id: "",
+                        billId: this.bill.id!,
+                        priceId: price.id!,
+                        productId: productInOrder.productId,
+                        amount: productInOrder.productAmount,
+                        taxPercentage: 0.2,
+                        priceWithoutTax: parseInt(price.priceInEur) * parseInt(productInOrder.productAmount),
+                        priceToPay: 0,
+                        sumOfTax: 0,
+                    };
+                    lineOnBill.priceToPay = lineOnBill.priceWithoutTax * lineOnBill.taxPercentage + lineOnBill.priceWithoutTax;
+                    lineOnBill.sumOfTax = lineOnBill.priceToPay - lineOnBill.priceWithoutTax;
+                    console.log("lineOnBill");
+                    console.log(lineOnBill);
+                    if (!this.billsLinesOnBills) {
+                        this.billsLinesOnBills = [];
+                        this.billsLinesOnBills[0] = lineOnBill;
+                    } else {
+                        this.billsLinesOnBills![this.billsLinesOnBills!.length] = lineOnBill;
+                    }
+                    console.log("line added");
+                }
+            });
+        });
+
+        console.log("this.billsLinesOnBills");
+        console.log(this.billsLinesOnBills);
+        for (let i = 0; i < this.billsLinesOnBills!.length; i++) {
+            await lineOnBillService.post(this.billsLinesOnBills![i]);
+        }
+
+        // update bill prices
+        await lineOnBillService.getAll().then((data) => {
+            this.linesOnBills = data!.data!;
+        })
+        console.log("this.linesOnBills");
+        console.log(this.linesOnBills);
+        this.linesOnBills!.forEach(lineOnBill => {
+            if (lineOnBill.billId === this.bill.id) {
+                this.bill.priceWithoutTax += lineOnBill.priceWithoutTax;
+                this.bill.priceToPay += lineOnBill.priceToPay;
+                this.bill.sumOfTax += lineOnBill.sumOfTax;
+                console.log("price updated");
+            }
+        });
+        console.log("update bill");
+        console.log(this.bill);
+        await billService.put(this.bill);
+    }
+
+    mounted(): void {
+        console.log("mounted", store.state.token);
+        const service = new BaseService<IProduct>(
+            "https://localhost:5001/api/v1/Products",
+            store.state.token ? store.state.token : undefined
+        );
+        service.getAll().then((data) => {
+            this.products = data.data!;
+        });
+        const service2 = new BaseService<IPrice>(
+            "https://localhost:5001/api/v1/Prices",
+            store.state.token ? store.state.token : undefined
+        );
+        service2.getAll().then((data) => {
+            this.prices = data.data!;
+        });
+    }
+
+    beforeUpdate(): void {
+        console.log("beforeUpdate");
+    }
+
+    updated(): void {
+        console.log("updated");
+    }
+
+    activated(): void {
+        console.log("activated");
+    }
+
+    deactivated(): void {
+        console.log("deactivated");
+    }
+
+    beforeUnmount(): void {
+        console.log("beforeUnmount");
+    }
+
+    unmounted(): void {
+        console.log("unmounted");
+    }
+}
+</script>
