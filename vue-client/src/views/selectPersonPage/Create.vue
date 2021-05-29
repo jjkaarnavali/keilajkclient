@@ -1,7 +1,7 @@
 <template>
-<h1>Edit person</h1>
+    <h1>Create</h1>
 
-    <h4>Edit</h4>
+    <h4>Person</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
@@ -10,7 +10,7 @@
                 <input
                     class="form-control"
                     id="Input_FirstName"
-                    v-model="person.firstName"
+                    v-model="firstName"
                 />
             </div>
             <div class="form-group">
@@ -18,7 +18,7 @@
                 <input
                     class="form-control"
                     id="Input_LastName"
-                    v-model="person.lastName"
+                    v-model="lastName"
                 />
             </div>
             <div class="form-group">
@@ -26,23 +26,23 @@
                 <input
                     class="form-control"
                     id="Input_PersonsIdCode"
-                    v-model="person.personsIdCode"
+                    v-model="personsIdCode"
                 />
             </div>
             <div class="form-group">
                 <button
-                    @click="saveClicked($event)"
+                    @click="createClicked($event)"
                     type="submit"
                     class="btn btn-primary"
                 >
-                    Save
+                    Create
                 </button>
             </div>
         </div>
     </div>
 
     <div>
-        <router-link :to="'/persons/'">Back to List</router-link>
+        <router-link :to="'/selectPersonPage/Index/'">Back to List</router-link>
     </div>
 </template>
 <script lang="ts">
@@ -53,21 +53,16 @@ import { IPerson } from "@/domain/IPerson";
 
 @Options({
     components: {},
-    props: {
-        id: String,
-    },
+    props: {},
 })
-export default class PersonsEdit extends Vue {
-    id!: string;
-    person: IPerson = {
-        id: "",
-        firstName: "",
-        lastName: "",
-        personsIdCode: "",
-        appUserId: ""
-    };
+export default class SelectPersonPageCreate extends Vue {
+    id: undefined;
+    firstName: string = "";
+    lastName: string = "";
+    personsIdCode: string = "";
 
-    async saveClicked(event: Event): Promise<void> {
+    async createClicked(event: Event): Promise<void> {
+        console.log(this.firstName, this.lastName, this.personsIdCode);
         const service = new BaseService<IPerson>(
             "https://localhost:5001/api/v1/Persons",
             store.state.token ? store.state.token : undefined
@@ -83,44 +78,28 @@ export default class PersonsEdit extends Vue {
         var decodedToken = JSON.parse(jsonPayload);
         var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
-        const objToEdit: IPerson = {
+        const objToCreate: IPerson = {
             id:
-            this.person.id,
+            this.id,
             firstName:
-            this.person.firstName,
+            this.firstName,
             lastName:
-            this.person.lastName,
+            this.lastName,
             personsIdCode:
-            this.person.personsIdCode,
+            this.personsIdCode,
             appUserId:
             userId
         };
 
-        console.log(objToEdit);
+        console.log(objToCreate);
 
-        const response = await service.put(objToEdit);
+        const response = await service.post(objToCreate);
 
         console.log(response);
     }
 
     beforeCreate(): void {
         console.log("beforeCreate");
-        const service = new BaseService<IPerson>(
-            "https://localhost:5001/api/v1/Persons",
-            store.state.token ? store.state.token : undefined
-        );
-        console.log(this.id);
-        console.log("lmao");
-        service.get(this.id).then((data) => {
-            console.log(data);
-            console.log(data.data!.firstName);
-            this.person.id = data.data!.id;
-            this.person.firstName = data.data!.firstName;
-            this.person.lastName = data.data!.lastName;
-            this.person.personsIdCode = data.data!.personsIdCode;
-            this.person.appUserId = data.data!.appUserId;
-            console.log(this.person);
-        });
     }
 
     created(): void {

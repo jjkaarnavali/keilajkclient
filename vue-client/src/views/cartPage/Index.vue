@@ -54,7 +54,9 @@
 
         <a>{{totalprice}}</a>
 
-        <a asp-controller="SelectPersonPage" asp-action="Index" asp-route-total="@Model.totalPrice">Purchase</a>
+        <div class="text-center"><router-link :to="'/selectPersonPage/Index/'"
+            >Purchase</router-link>
+        </div>
     </section>
 </template>
 

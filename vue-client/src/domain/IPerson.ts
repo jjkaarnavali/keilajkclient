@@ -4,4 +4,5 @@ export interface IPerson{
     firstName: string;
     lastName: string;
     personsIdCode: string;
+    appUserId: string | undefined;
 }

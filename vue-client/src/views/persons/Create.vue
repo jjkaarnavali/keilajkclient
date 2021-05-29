@@ -68,6 +68,16 @@ export default class PersonsCreate extends Vue {
             store.state.token ? store.state.token : undefined
         );
 
+        var token = store.state.token;
+        var base64Url = token!.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        var decodedToken = JSON.parse(jsonPayload);
+        var userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
         const objToCreate: IPerson = {
             id:
             this.id,
@@ -76,7 +86,10 @@ export default class PersonsCreate extends Vue {
             lastName:
             this.lastName,
             personsIdCode:
-            this.personsIdCode
+            this.personsIdCode,
+            appUserId:
+            userId
+            
         };
 
         console.log(objToCreate);

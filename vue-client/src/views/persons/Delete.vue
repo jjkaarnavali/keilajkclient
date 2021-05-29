@@ -50,7 +50,8 @@ export default class PersonsDelete extends Vue {
         id: "",
         firstName: "",
         lastName: "",
-        personsIdCode: ""
+        personsIdCode: "",
+        appUserId: ""
     };
 
     async deleteClicked(event: Event): Promise<void> {
@@ -67,7 +68,9 @@ export default class PersonsDelete extends Vue {
             lastName:
             this.person.lastName,
             personsIdCode:
-            this.person.personsIdCode
+            this.person.personsIdCode,
+            appUserId:
+            undefined
         };
 
         console.log(objToDelete);
@@ -104,6 +107,7 @@ export default class PersonsDelete extends Vue {
             this.person.firstName = data.data!.firstName;
             this.person.lastName = data.data!.lastName;
             this.person.personsIdCode = data.data!.personsIdCode;
+            this.person.appUserId = data.data!.appUserId;
             console.log(this.person);
         });
     }

@@ -51,7 +51,8 @@ export default class PersonsDetails extends Vue {
         id: "",
         firstName: "",
         lastName: "",
-        personsIdCode: ""
+        personsIdCode: "",
+        appUserId: ""
     };
 
     beforeCreate(): void {
@@ -81,6 +82,7 @@ export default class PersonsDetails extends Vue {
             this.person.firstName = data.data!.firstName;
             this.person.lastName = data.data!.lastName;
             this.person.personsIdCode = data.data!.personsIdCode;
+            this.person.appUserId = data.data!.appUserId;
             console.log(this.person);
         });
     }

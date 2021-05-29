@@ -39,6 +39,8 @@ import ProductInOrderEdit from '../views/productsInOrders/Edit.vue';
 import ProductInOrderDelete from '../views/productsInOrders/Delete.vue';
 import ProductsPageIndex from '../views/productsPage/Index.vue';
 import CartPageIndex from '../views/cartPage/Index.vue';
+import PersonSelectPageIndex from '../views/selectPersonPage/Index.vue';
+import PersonSelectPageCreate from '../views/selectPersonPage/Create.vue';
 import ProductDetailsPageIndex from '../views/productDetailsPage/Index.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -81,6 +83,16 @@ const routes: Array<RouteRecordRaw> = [
         path: '/cartPage/Index',
         name: 'cartPage-Index',
         component: CartPageIndex
+    },
+    {
+        path: '/selectPersonPage/Index',
+        name: 'selectPersonPage-Index',
+        component: PersonSelectPageIndex
+    },
+    {
+        path: '/selectPersonPage/Create',
+        name: 'selectPersonPage-Create',
+        component: PersonSelectPageCreate
     },
     { path: '/persons/', name: 'persons-index', component: PersonIndex, },
     { path: '/persons/details/:id', name: 'persons-details', component: PersonDetails, props: true },
