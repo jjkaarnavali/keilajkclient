@@ -3,19 +3,27 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.PaymentTypeName)
+                    PaymentTypeName
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-@foreach (var item in Model) {
-            <tr>
+            <tr v-for="paymentType in paymentTypes" :key="paymentType.id">
                 <td>
-                    @Html.DisplayFor(modelItem => item.PaymentTypeName)
+                    {{paymentType.paymentTypeName}}
                 </td>
                 <td>
-                    <a asp-controller="PurchaseReceivedPage" asp-action="Index" asp-route-id="@item.Id">@Resources.Base.Common.Buy</a>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        <router-link
+                            :to="'/purchaseReceivedPage/Index/' + paymentType.id"
+                            class="nav-link text-light"
+                            >Select</router-link
+                        >
+                    </button>
                 </td>
             </tr>
         </tbody>
@@ -32,6 +40,7 @@ import { IOrder } from "@/domain/IOrder";
 import { IBill } from "@/domain/IBill";
 import { ILineOnBill } from "@/domain/ILineOnBill";
 import { IProductInOrder } from "@/domain/IProductInOrder";
+import { IPaymentType } from "@/domain/IPayment-Type";
 
 @Options({
     components: {},
@@ -43,6 +52,7 @@ export default class PurchasePageIndex extends Vue {
     id!: string;
     products: IProduct[] | null = null;
     linesOnBills: ILineOnBill[] | null = null;
+    paymentTypes: IPaymentType[] | null = null;
     billsLinesOnBills: ILineOnBill[] | null = null;
     prices: IPrice[] | null = null;
     orders: IOrder[] | null = null;
@@ -211,19 +221,12 @@ export default class PurchasePageIndex extends Vue {
 
     mounted(): void {
         console.log("mounted", store.state.token);
-        const service = new BaseService<IProduct>(
-            "https://localhost:5001/api/v1/Products",
+        const service = new BaseService<IPaymentType>(
+            "https://localhost:5001/api/v1/PaymentTypes",
             store.state.token ? store.state.token : undefined
         );
         service.getAll().then((data) => {
-            this.products = data.data!;
-        });
-        const service2 = new BaseService<IPrice>(
-            "https://localhost:5001/api/v1/Prices",
-            store.state.token ? store.state.token : undefined
-        );
-        service2.getAll().then((data) => {
-            this.prices = data.data!;
+            this.paymentTypes = data.data!;
         });
     }
 

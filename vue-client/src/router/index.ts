@@ -42,6 +42,7 @@ import CartPageIndex from '../views/cartPage/Index.vue';
 import PersonSelectPageIndex from '../views/selectPersonPage/Index.vue';
 import PersonSelectPageCreate from '../views/selectPersonPage/Create.vue';
 import PurchasePageIndex from '../views/purchasePage/Index.vue';
+import PurchaseReceivedPageIndex from '../views/purchaseReceivedPage/Index.vue';
 import ProductDetailsPageIndex from '../views/productDetailsPage/Index.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -99,6 +100,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/purchasePage/Index/:id',
         name: 'purchasePage-Index',
         component: PurchasePageIndex,
+        props: true
+    },
+    {
+        path: '/purchaseReceivedPage/Index/:id',
+        name: 'purchaseReceivedPage-Index',
+        component: PurchaseReceivedPageIndex,
         props: true
     },
     { path: '/persons/', name: 'persons-index', component: PersonIndex, },

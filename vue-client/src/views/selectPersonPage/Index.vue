@@ -33,7 +33,6 @@
                     {{person.personsIdCode}}
                 </td>
                 <td>
-                    <a asp-controller="PurchasePage" asp-action="Index" asp-route-personId="@item.Id">Select</a> |
                     <button
                         type="submit"
                         class="btn btn-primary"
