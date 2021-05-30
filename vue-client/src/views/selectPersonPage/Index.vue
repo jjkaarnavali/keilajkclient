@@ -1,22 +1,22 @@
 <template>
-    <h1>Persons</h1>
+    <h1>{{ state.baseLangResources.commons.persons }}</h1>
 
     <p>
         <router-link :to="'/selectPersonPage/create/'"
-            >{{ state.baseLangResources.commons.create }}</router-link
+            >{{ state.baseLangResources.commons.createPerson }}</router-link
         >
     </p>
     <table class="table">
         <thead>
         <tr>
             <th>
-                First name
+                {{ state.baseLangResources.commons.firstName }}
             </th>
             <th>
-                Last name
+                {{ state.baseLangResources.commons.lastName }}
             </th>
             <th>
-                ID code
+                {{ state.baseLangResources.commons.idCode }}
             </th>
             <th></th>
         </tr>
@@ -119,7 +119,17 @@ export default class SelectPersonPageIndex extends Vue {
                 remove: "",
                 shop: "",
                 addToCart: "",
-                view: ""
+                view: "",
+                totalPrice: "",
+                productName: "",
+                productAmount: "",
+                price: "",
+                firstName: "",
+                lastName: "",
+                idCode: "",
+                person: "",
+                createPerson: "",
+                paymentTypeName: ""
             }
         },
         appInitialized: true

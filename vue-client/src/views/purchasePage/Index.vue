@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>
-                    PaymentTypeName
+                    {{ state.baseLangResources.commons.paymentTypeName }}
                 </th>
                 <th></th>
             </tr>
@@ -114,7 +114,17 @@ export default class PurchasePageIndex extends Vue {
                 remove: "",
                 shop: "",
                 addToCart: "",
-                view: ""
+                view: "",
+                totalPrice: "",
+                productName: "",
+                productAmount: "",
+                price: "",
+                firstName: "",
+                lastName: "",
+                idCode: "",
+                person: "",
+                createPerson: "",
+                paymentTypeName: ""
             }
         },
         appInitialized: true

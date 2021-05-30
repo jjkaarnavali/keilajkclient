@@ -1,12 +1,12 @@
 <template>
-    <h1>{{ state.baseLangResources.commons.create }}</h1>
+    <h1>{{ state.baseLangResources.commons.createPerson }}</h1>
 
-    <h4>Person</h4>
+    <h4>{{ state.baseLangResources.commons.person }}</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label  for="firstName">First name</label>
+                <label  for="firstName">{{ state.baseLangResources.commons.firstName }}</label>
                 <input
                     class="form-control"
                     id="Input_FirstName"
@@ -14,7 +14,7 @@
                 />
             </div>
             <div class="form-group">
-                <label  for="lastName">Last name</label>
+                <label  for="lastName">{{ state.baseLangResources.commons.lastName }}</label>
                 <input
                     class="form-control"
                     id="Input_LastName"
@@ -22,7 +22,7 @@
                 />
             </div>
             <div class="form-group">
-                <label for="Input_PersonsIdCode">ID code</label>
+                <label for="Input_PersonsIdCode">{{ state.baseLangResources.commons.idCode }}</label>
                 <input
                     class="form-control"
                     id="Input_PersonsIdCode"
@@ -98,7 +98,17 @@ export default class SelectPersonPageCreate extends Vue {
                 remove: "",
                 shop: "",
                 addToCart: "",
-                view: ""
+                view: "",
+                totalPrice: "",
+                productName: "",
+                productAmount: "",
+                price: "",
+                firstName: "",
+                lastName: "",
+                idCode: "",
+                person: "",
+                createPerson: "",
+                paymentTypeName: ""
             }
         },
         appInitialized: true

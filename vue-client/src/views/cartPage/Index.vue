@@ -4,13 +4,13 @@
             <thead>
                 <tr>
                     <th>
-                        Product name
+                        {{ state.baseLangResources.commons.productName }}
                     </th>
                     <th>
-                        Product amount
+                        {{ state.baseLangResources.commons.productAmount }}
                     </th>
                     <th>
-                        Price
+                        {{ state.baseLangResources.commons.price }}
                     </th>
                     <th></th>
                 </tr>
@@ -135,7 +135,17 @@ export default class ProductDetailsPageIndex extends Vue {
                 remove: "",
                 shop: "",
                 addToCart: "",
-                view: ""
+                view: "",
+                totalPrice: "",
+                productName: "",
+                productAmount: "",
+                price: "",
+                firstName: "",
+                lastName: "",
+                idCode: "",
+                person: "",
+                createPerson: "",
+                paymentTypeName: ""
             }
         },
         appInitialized: true

@@ -52,7 +52,17 @@ export const initialState: IState = {
             remove: "",
             shop: "",
             addToCart: "",
-            view: ""
+            view: "",
+            totalPrice: "",
+            productName: "",
+            productAmount: "",
+            price: "",
+            firstName: "",
+            lastName: "",
+            idCode: "",
+            person: "",
+            createPerson: "",
+            paymentTypeName: ""
         }
     },
     appInitialized: false,

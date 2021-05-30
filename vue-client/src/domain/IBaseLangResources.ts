@@ -20,6 +20,16 @@ export interface IBaseLangResources {
         "remove": string,
         "shop": string,
         "addToCart": string,
-        "view": string
+        "view": string,
+        "totalPrice": string,
+        "productName": string,
+        "productAmount": string,
+        "price": string,
+        "firstName": string,
+        "lastName": string,
+        "idCode": string
+        "person": string,
+        "createPerson": string,
+        "paymentTypeName": string
     }
 }

@@ -95,7 +95,17 @@ export default class ProductDetailsPageIndex extends Vue {
                 remove: "",
                 shop: "",
                 addToCart: "",
-                view: ""
+                view: "",
+                totalPrice: "",
+                productName: "",
+                productAmount: "",
+                price: "",
+                firstName: "",
+                lastName: "",
+                idCode: "",
+                person: "",
+                createPerson: "",
+                paymentTypeName: ""
             }
         },
         appInitialized: true
