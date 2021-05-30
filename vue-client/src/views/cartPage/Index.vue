@@ -43,7 +43,7 @@
                             <router-link
                                 to="/CartPage/Index"
                                 class="nav-link text-light"
-                                >Remove</router-link
+                                >{{ state.baseLangResources.commons.remove }}</router-link
                             >
                         </button>
                         </div>
@@ -52,17 +52,17 @@
             </tbody>
         </table>
 
-        <a>{{totalprice}}</a>
+        <a>{{totalprice}} eur</a>
 
         <div class="text-center"><router-link :to="'/selectPersonPage/Index/'"
-            >Purchase</router-link>
+            >{{ state.baseLangResources.commons.purchase }}</router-link>
         </div>
     </section>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
@@ -98,6 +98,49 @@ export default class ProductDetailsPageIndex extends Vue {
         productCode: ""
     };
 
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
+    };
+
     async remove(event: Event, id: string): Promise<void> {
         const productInOrderService = new BaseService<IProductInOrder>(
             "https://localhost:5001/api/v1/ProductsInOrders",
@@ -126,6 +169,7 @@ export default class ProductDetailsPageIndex extends Vue {
 
     beforeMount(): void {
         console.log("beforeMount");
+        this.state = store.state;
     }
 
     mounted(): void {

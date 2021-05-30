@@ -21,7 +21,7 @@
                         <router-link
                             :to="'/purchaseReceivedPage/Index/' + paymentType.id"
                             class="nav-link text-light"
-                            >Select</router-link
+                            >{{ state.baseLangResources.commons.select }}</router-link
                         >
                     </button>
                 </td>
@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
@@ -75,6 +75,49 @@ export default class PurchasePageIndex extends Vue {
         id: "",
         userId: "",
         until: ""
+    };
+
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
     };
 
     get isUserLoggedIn(): boolean {
@@ -217,6 +260,8 @@ export default class PurchasePageIndex extends Vue {
         console.log("update bill");
         console.log(this.bill);
         await billService.put(this.bill);
+
+        this.state = store.state;
     }
 
     mounted(): void {

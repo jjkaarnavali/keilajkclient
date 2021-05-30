@@ -6,7 +6,7 @@
                         <h1 class="display-5 fw-bolder">{{product.productName}}</h1>
                         <div class="fs-5 mb-5" v-for="price in prices" :key="price.id">
                             <span v-if="product.id === price.productId">
-                                {{ price.priceInEur }} euros
+                                {{ price.priceInEur }} eur
                             </span>
                         </div>
                         <p class="lead">{{product.productSize}}</p>
@@ -18,7 +18,7 @@
                                     type="submit"
                                     class="btn btn-primary"
                                 >
-                                Add to cart
+                                {{ state.baseLangResources.commons.addToCart }}
                             </button>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
@@ -56,6 +56,49 @@ export default class ProductDetailsPageIndex extends Vue {
         productSize: "",
         productSeason: "",
         productCode: ""
+    };
+
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
     };
 
     async addToCart(event: Event, id: string): Promise<void> {
@@ -178,6 +221,7 @@ export default class ProductDetailsPageIndex extends Vue {
 
     beforeMount(): void {
         console.log("beforeMount");
+        this.state = store.state;
     }
 
     mounted(): void {

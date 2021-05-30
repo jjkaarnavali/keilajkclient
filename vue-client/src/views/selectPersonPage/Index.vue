@@ -3,7 +3,7 @@
 
     <p>
         <router-link :to="'/selectPersonPage/create/'"
-            >Create new</router-link
+            >{{ state.baseLangResources.commons.create }}</router-link
         >
     </p>
     <table class="table">
@@ -40,7 +40,7 @@
                         <router-link
                             :to="'/purchasePage/Index/' + person.id"
                             class="nav-link text-light"
-                            >Select</router-link
+                            >{{ state.baseLangResources.commons.select }}</router-link
                         >
                     </button>
                     <button
@@ -51,7 +51,7 @@
                         <router-link
                             to="/selectPersonPage/Index"
                             class="nav-link text-light"
-                            >Remove</router-link
+                            >{{ state.baseLangResources.commons.remove }}</router-link
                         >
                     </button>
                 </td>
@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
@@ -81,6 +81,49 @@ export default class SelectPersonPageIndex extends Vue {
     prices: IPrice[] | null = null;
     orders: IOrder[] | null = null;
     productsInOrders: IProductInOrder[] | null = null;
+
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
+    };
 
     async remove(event: Event, id: string): Promise<void> {
         const personService = new BaseService<IPerson>(
@@ -107,6 +150,7 @@ export default class SelectPersonPageIndex extends Vue {
 
     beforeMount(): void {
         console.log("beforeMount");
+        this.state = store.state;
     }
 
     mounted(): void {

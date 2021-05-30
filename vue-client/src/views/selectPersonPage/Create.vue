@@ -1,5 +1,5 @@
 <template>
-    <h1>Create</h1>
+    <h1>{{ state.baseLangResources.commons.create }}</h1>
 
     <h4>Person</h4>
     <hr />
@@ -35,19 +35,19 @@
                     type="submit"
                     class="btn btn-primary"
                 >
-                    Create
+                    {{ state.baseLangResources.commons.create }}
                 </button>
             </div>
         </div>
     </div>
 
     <div>
-        <router-link :to="'/selectPersonPage/Index/'">Back to List</router-link>
+        <router-link :to="'/selectPersonPage/Index/'">{{ state.baseLangResources.commons.back }}</router-link>
     </div>
 </template>
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IPerson } from "@/domain/IPerson";
 
@@ -60,6 +60,49 @@ export default class SelectPersonPageCreate extends Vue {
     firstName: string = "";
     lastName: string = "";
     personsIdCode: string = "";
+
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
+    };
 
     async createClicked(event: Event): Promise<void> {
         console.log(this.firstName, this.lastName, this.personsIdCode);
@@ -108,6 +151,7 @@ export default class SelectPersonPageCreate extends Vue {
 
     beforeMount(): void {
         console.log("beforeMount");
+        this.state = store.state;
     }
 
     mounted(): void {

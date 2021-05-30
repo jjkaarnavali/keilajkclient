@@ -1,11 +1,12 @@
 <template>
     <div class="about">
-        <h1>This is an home page</h1>
+        <h1></h1>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import store from "@/store/index";
 
 @Options({
     components: {},

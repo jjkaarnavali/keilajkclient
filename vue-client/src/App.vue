@@ -1,21 +1,22 @@
-<template>
+
+<template if.bind="state.appInitialized">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container px-4 px-lg-5">
-                    <a class="navbar-brand" href="#!">Pood</a>
+                    <a class="navbar-brand" href="#!">{{state.baseLangResources.commons.shop}}</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                             <li class="nav-item">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">{{state.baseLangResources.commons.home}}</a>
                             </li>
                             <li class="nav-item">
                                 <router-link class="nav-link text-dark" to="/productsPage/Index/"
-                                >Products</router-link>
+                                >{{state.baseLangResources.commons.products}}</router-link>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Shop
+                                    {{state.baseLangResources.commons.shop}}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <router-link class="nav-link text-dark" to="/payment-types/"
@@ -47,7 +48,7 @@
                             <router-link
                                 to="/identity/login"
                                 class="nav-link text-dark"
-                                >Login</router-link
+                                >{{state.baseLangResources.commons.login}}</router-link
                             >
                         </li>
                     </ul>
@@ -56,7 +57,7 @@
                             <router-link
                                 to="/identity/register"
                                 class="nav-link text-dark"
-                                >Register</router-link
+                                >{{state.baseLangResources.commons.register}}</router-link
                             >
                         </li>
                     </ul>
@@ -67,7 +68,7 @@
                                 class="nav-link text-dark"
                                 @click="logOut()"
                             >
-                                Logout</a
+                                {{state.baseLangResources.commons.logout}}</a
                             >
                         </li>
                     </ul>
@@ -77,7 +78,7 @@
                                 <router-link
                                 to="/CartPage/Index"
                                 class="nav-link text-dark"
-                                >Cart</router-link
+                                >{{state.baseLangResources.commons.cart}}</router-link
                                 >
                             </button>
                         </form>
@@ -110,6 +111,7 @@ import { LangService } from "@/services/lang-service";
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { ISupportedLanguage } from './domain/ISupportedLanguage';
 import { ILangResources } from './domain/ILangResources';
+import { IBaseLangResources } from './domain/IBaseLangResources';
 
 @Options({
     // Do not forget to register imported components!!!!!
@@ -135,6 +137,31 @@ export default class App extends Vue {
                 }
             }
         },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
         appInitialized: true
     };
 
@@ -149,6 +176,15 @@ export default class App extends Vue {
                 // console.log(response);
                 if (response.statusCode === 200) {
                     this.state.langResources = response.data as ILangResources;
+                }
+            }
+        );
+
+        await this.langService.getBaseLangResources("/GetBaseLangResources", this.state.currentLanguage.name).then(
+            response => {
+                // console.log(response);
+                if (response.statusCode === 200) {
+                    this.state.baseLangResources = response.data as IBaseLangResources;
                     this.state.appInitialized = true;
                 }
             }
@@ -178,6 +214,16 @@ export default class App extends Vue {
                 if (response.statusCode === 200) {
                     this.state.langResources = response.data as ILangResources;
                     store.state.langResources = response.data as ILangResources;
+                }
+            }
+        );
+
+        this.langService.getBaseLangResources("/GetBaseLangResources", this.state.currentLanguage.name).then(
+            response => {
+                console.log(response);
+                if (response.statusCode === 200) {
+                    this.state.baseLangResources = response.data as IBaseLangResources;
+                    store.state.baseLangResources = response.data as IBaseLangResources;
                 }
             }
         );

@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import { ILangResources } from '../domain/ILangResources';
+import { IBaseLangResources } from '../domain/IBaseLangResources';
 import { ISupportedLanguage } from './../domain/ISupportedLanguage';
 
 export interface IState {
@@ -10,6 +11,7 @@ export interface IState {
     supportedLanguages: ISupportedLanguage[];
     currentLanguage: ISupportedLanguage;
     langResources: ILangResources;
+    baseLangResources: IBaseLangResources;
     appInitialized: boolean;
 }
 
@@ -26,6 +28,31 @@ export const initialState: IState = {
                     languages: "Select language"
                 }
             }
+        }
+    },
+    baseLangResources: {
+        commons: {
+            askForDeleteConfirmation: "",
+            back: "",
+            buy: "",
+            cart: "",
+            create: "",
+            edit: "",
+            details: "",
+            delete: "",
+            home: "",
+            logout: "",
+            login: "",
+            register: "",
+            products: "",
+            save: "",
+            select: "",
+            thanksForOrdering: "",
+            purchase: "",
+            remove: "",
+            shop: "",
+            addToCart: "",
+            view: ""
         }
     },
     appInitialized: false,

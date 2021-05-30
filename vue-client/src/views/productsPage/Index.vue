@@ -20,7 +20,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><router-link :to="'/productDetailsPage/Index/' + item.id"
-                        >View</router-link>
+                        >{{ state.baseLangResources.commons.view }}</router-link>
                         </div>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -30,7 +30,7 @@
                                         type="submit"
                                         class="btn btn-primary"
                                     >
-                                    Add to cart
+                                    {{ state.baseLangResources.commons.addToCart }}
                                     </button>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
 import { BaseService } from "@/services/base-service";
 import { IProduct } from "@/domain/IProduct";
 import { IPrice } from "@/domain/IPrice";
@@ -59,6 +59,48 @@ export default class ProductsPageIndex extends Vue {
     prices: IPrice[] | null = null;
     orders: IOrder[] | null = null;
     productsInOrders: IProductInOrder[] | null = null;
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        baseLangResources: {
+            commons: {
+                askForDeleteConfirmation: "",
+                back: "",
+                buy: "",
+                cart: "",
+                create: "",
+                edit: "",
+                details: "",
+                delete: "",
+                home: "",
+                logout: "",
+                login: "",
+                register: "",
+                products: "",
+                save: "",
+                select: "",
+                thanksForOrdering: "",
+                purchase: "",
+                remove: "",
+                shop: "",
+                addToCart: "",
+                view: ""
+            }
+        },
+        appInitialized: true
+    };
 
     async addToCart(event: Event, id: string): Promise<void> {
         console.log(id);
@@ -177,6 +219,7 @@ export default class ProductsPageIndex extends Vue {
 
     beforeMount(): void {
         console.log("beforeMount");
+        this.state = store.state;
     }
 
     mounted(): void {
@@ -195,6 +238,8 @@ export default class ProductsPageIndex extends Vue {
         service2.getAll().then((data) => {
             this.prices = data.data!;
         });
+        console.log("this.state");
+        console.log(this.state);
     }
 
     beforeUpdate(): void {

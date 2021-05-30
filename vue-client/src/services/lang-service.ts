@@ -1,6 +1,7 @@
 import { ISupportedLanguage } from './../domain/ISupportedLanguage';
 import { IMessage } from '../types/IMessage';
 import { ILangResources } from '../domain/ILangResources';
+import { IBaseLangResources } from '../domain/IBaseLangResources';
 import store from "@/store";
 import { IFetchResponse } from "@/types/IFetchResponse";
 import { IQueryParams } from "@/types/IQueryParams";
@@ -54,6 +55,36 @@ export class LangService {
     }
 
     async getLangResources(endpoint: string = "", langName: string = ""): Promise<IFetchResponse<ILangResources | IMessage>> {
+        let url = this.apiEndpointUrl + endpoint;
+
+        if (langName !== "") {
+            url = url + '?culture=' + langName;
+        }
+        try {
+            const response = await axios.get(url, { headers: this.authHeaders });
+            const data = await response.data;
+
+            if (response.status >= 200 && response.status < 300) {
+                return {
+                    statusCode: response.status,
+                    data: data,
+                };
+            }
+
+            return {
+                statusCode: response.status,
+                errorMessage: data.messages.join(' '),
+            };
+        } catch (reason) {
+            console.log('in catch');
+            return {
+                statusCode: 0,
+                errorMessage: JSON.stringify(reason),
+            };
+        }
+    }
+
+    async getBaseLangResources(endpoint: string = "", langName: string = ""): Promise<IFetchResponse<IBaseLangResources | IMessage>> {
         let url = this.apiEndpointUrl + endpoint;
 
         if (langName !== "") {
