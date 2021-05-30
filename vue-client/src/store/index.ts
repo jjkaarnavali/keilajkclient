@@ -1,16 +1,35 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import { ILangResources } from '../domain/ILangResources';
+import { ISupportedLanguage } from './../domain/ISupportedLanguage';
 
 export interface IState {
     token: string | null;
     firstname: string;
     lastname: string;
+    supportedLanguages: ISupportedLanguage[];
+    currentLanguage: ISupportedLanguage;
+    langResources: ILangResources;
+    appInitialized: boolean;
 }
 
 export const initialState: IState = {
     token: null,
     firstname: '',
     lastname: '',
+    supportedLanguages: [],
+    currentLanguage: { name: 'et', nativeName: 'eesti' },
+    langResources: {
+        views: {
+            shared: {
+                layout: {
+                    languages: "Select language"
+                }
+            }
+        }
+    },
+    appInitialized: false,
+
 }
 
 export interface IJwtResponse {

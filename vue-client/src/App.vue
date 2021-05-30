@@ -34,6 +34,13 @@
                                 >Products In Orders</router-link>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown show">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{state.langResources.views.shared.layout.languages}}</a>
+                                <div class="dropdown-menu show" aria-labelledby="navbarDropdown">
+                                    <a v-for="lang in state.supportedLanguages" :key="lang" @click="changeLanguage(lang, $event)" class="dropdown-item text-dark" href="#">{{lang.nativeName}}</a>
+                                </div>
+                            </li>
+
                         </ul>
                         <ul v-if="token == null" class="navbar-nav">
                         <li class="nav-item">
@@ -93,12 +100,16 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">Vue demo</div>
+        <div class="container">Vue demo {{state.currentLanguage}}</div>
     </footer>
 </template>
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store/index";
+import store, { IState } from "@/store/index";
+import { LangService } from "@/services/lang-service";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { ISupportedLanguage } from './domain/ISupportedLanguage';
+import { ILangResources } from './domain/ILangResources';
 
 @Options({
     // Do not forget to register imported components!!!!!
@@ -107,6 +118,69 @@ import store from "@/store/index";
 export default class App extends Vue {
     get token(): string | null {
         return store.state.token;
+    }
+
+    private state: IState = {
+        token: "",
+        firstname: "",
+        lastname: "",
+        supportedLanguages: [],
+        currentLanguage: { name: 'et', nativeName: 'eesti' },
+        langResources: {
+            views: {
+                shared: {
+                    layout: {
+                        languages: "Select language"
+                    }
+                }
+            }
+        },
+        appInitialized: true
+    };
+
+    private langService = new LangService(
+        "https://localhost:5001/api/v1/lang",
+        store.state.token ? store.state.token : undefined
+    );
+
+    async mounted() {
+        await this.langService.getLangResources("/GetLangResources", this.state.currentLanguage.name).then(
+            response => {
+                // console.log(response);
+                if (response.statusCode === 200) {
+                    this.state.langResources = response.data as ILangResources;
+                    this.state.appInitialized = true;
+                }
+            }
+        );
+
+        await this.langService.getSupportedLanguages("/GetSupportedLanguages", this.state.currentLanguage.name).then(
+            response => {
+                // console.log(response);
+                if (response.statusCode === 200) {
+                    this.state.supportedLanguages = response.data as ISupportedLanguage[];
+                }
+            }
+        );
+
+        // console.log(this.state);
+    }
+
+    changeLanguage(lang: ISupportedLanguage, e: Event) {
+        this.state.currentLanguage = lang;
+        store.state.currentLanguage = lang;
+        console.log("changeing language");
+        console.log(lang);
+
+        this.langService.getLangResources("/GetLangResources", this.state.currentLanguage.name).then(
+            response => {
+                console.log(response);
+                if (response.statusCode === 200) {
+                    this.state.langResources = response.data as ILangResources;
+                    store.state.langResources = response.data as ILangResources;
+                }
+            }
+        );
     }
 
     logOut(): void {

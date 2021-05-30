@@ -27,6 +27,19 @@ export class BaseService<TEntity extends IEntityId> {
 
     async getAll(queryParams?: IQueryParams,): Promise<IFetchResponse<TEntity[]>> {
         let url = this.apiEndpointUrl;
+        console.log("get all current language");
+        console.log(store.state.currentLanguage);
+
+        /* if (this.langName !== undefined && this.langName !== null) {
+            url = url + '?culture=' + this.langName;
+        } */
+
+        if (store.state.currentLanguage !== undefined) {
+            url = url + '?culture=' + store.state.currentLanguage.name;
+        }
+
+        console.log("url");
+        console.log(url);
 
         if (queryParams !== undefined) {
             // TODO: add query params to url
