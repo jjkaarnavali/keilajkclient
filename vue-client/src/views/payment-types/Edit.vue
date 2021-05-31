@@ -50,7 +50,7 @@ export default class PaymentTypesEdit extends Vue {
 
     async saveClicked(event: Event): Promise<void> {
         const service = new BaseService<IPaymentType>(
-            "https://localhost:5001/api/v1/PaymentTypes",
+            "https://jakaar.azurewebsites.net/api/v1/PaymentTypes",
             store.state.token ? store.state.token : undefined
         );
 
@@ -71,7 +71,7 @@ export default class PaymentTypesEdit extends Vue {
     beforeCreate(): void {
         console.log("beforeCreate");
         const service = new BaseService<IPaymentType>(
-            "https://localhost:5001/api/v1/PaymentTypes",
+            "https://jakaar.azurewebsites.net/api/v1/PaymentTypes",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

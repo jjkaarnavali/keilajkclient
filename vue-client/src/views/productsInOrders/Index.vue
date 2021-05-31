@@ -69,7 +69,7 @@ export default class ProductsInOrdersIndex extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IProductInOrder>(
-            "https://localhost:5001/api/v1/ProductsInOrders",
+            "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
             store.state.token ? store.state.token : undefined
         );
         service.getAll().then((data) => {

@@ -145,7 +145,7 @@ export default class PurchasePageIndex extends Vue {
     async beforeMount(): Promise<void> {
         console.log("beforeMount");
         const orderService = new BaseService<IOrder>(
-            "https://localhost:5001/api/v1/Orders",
+            "https://jakaar.azurewebsites.net/api/v1/Orders",
             store.state.token ? store.state.token : undefined
         );
 
@@ -177,7 +177,7 @@ export default class PurchasePageIndex extends Vue {
         this.bill.sumOfTax = 0;
 
         const billService = new BaseService<IBill>(
-            "https://localhost:5001/api/v1/Bills",
+            "https://jakaar.azurewebsites.net/api/v1/Bills",
             store.state.token ? store.state.token : undefined
         );
         console.log("this.bill");
@@ -200,18 +200,18 @@ export default class PurchasePageIndex extends Vue {
         console.log(this.bill);
 
         const productInOrderService = new BaseService<IProductInOrder>(
-            "https://localhost:5001/api/v1/ProductsInOrders",
+            "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
             store.state.token ? store.state.token : undefined
         );
         await productInOrderService.getAll().then((data) => {
             this.productsInOrders = data!.data!;
         })
         const lineOnBillService = new BaseService<ILineOnBill>(
-            "https://localhost:5001/api/v1/LinesOnBills",
+            "https://jakaar.azurewebsites.net/api/v1/LinesOnBills",
             store.state.token ? store.state.token : undefined
         );
         const priceService = new BaseService<IPrice>(
-            "https://localhost:5001/api/v1/Prices",
+            "https://jakaar.azurewebsites.net/api/v1/Prices",
             store.state.token ? store.state.token : undefined
         );
         await priceService.getAll().then((data) => {
@@ -277,7 +277,7 @@ export default class PurchasePageIndex extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IPaymentType>(
-            "https://localhost:5001/api/v1/PaymentTypes",
+            "https://jakaar.azurewebsites.net/api/v1/PaymentTypes",
             store.state.token ? store.state.token : undefined
         );
         service.getAll().then((data) => {

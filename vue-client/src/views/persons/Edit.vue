@@ -69,7 +69,7 @@ export default class PersonsEdit extends Vue {
 
     async saveClicked(event: Event): Promise<void> {
         const service = new BaseService<IPerson>(
-            "https://localhost:5001/api/v1/Persons",
+            "https://jakaar.azurewebsites.net/api/v1/Persons",
             store.state.token ? store.state.token : undefined
         );
 
@@ -106,7 +106,7 @@ export default class PersonsEdit extends Vue {
     beforeCreate(): void {
         console.log("beforeCreate");
         const service = new BaseService<IPerson>(
-            "https://localhost:5001/api/v1/Persons",
+            "https://jakaar.azurewebsites.net/api/v1/Persons",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

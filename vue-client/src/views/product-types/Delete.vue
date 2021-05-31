@@ -74,7 +74,7 @@ export default class ProductTypesDelete extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IProductType>(
-            "https://localhost:5001/api/v1/ProductTypes",
+            "https://jakaar.azurewebsites.net/api/v1/ProductTypes",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

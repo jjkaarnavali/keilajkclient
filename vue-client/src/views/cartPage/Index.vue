@@ -153,7 +153,7 @@ export default class ProductDetailsPageIndex extends Vue {
 
     async remove(event: Event, id: string): Promise<void> {
         const productInOrderService = new BaseService<IProductInOrder>(
-            "https://localhost:5001/api/v1/ProductsInOrders",
+            "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
             store.state.token ? store.state.token : undefined
         );
 
@@ -185,7 +185,7 @@ export default class ProductDetailsPageIndex extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IProduct>(
-            "https://localhost:5001/api/v1/Products",
+            "https://jakaar.azurewebsites.net/api/v1/Products",
             store.state.token ? store.state.token : undefined
         );
         // console.log(this.id);
@@ -195,7 +195,7 @@ export default class ProductDetailsPageIndex extends Vue {
             // console.log(this.prices);
 
             const service2 = new BaseService<IPrice>(
-                "https://localhost:5001/api/v1/Prices",
+                "https://jakaar.azurewebsites.net/api/v1/Prices",
                 store.state.token ? store.state.token : undefined
             );
             service2.getAll().then((data) => {
@@ -203,7 +203,7 @@ export default class ProductDetailsPageIndex extends Vue {
                 // console.log(this.prices);
 
                 const service3 = new BaseService<IProductInOrder>(
-                    "https://localhost:5001/api/v1/ProductsInOrders",
+                    "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
                     store.state.token ? store.state.token : undefined
                 );
                 service3.getAll().then((data) => {
@@ -211,7 +211,7 @@ export default class ProductDetailsPageIndex extends Vue {
                     // console.log(this.productsInOrders);
 
                     const service4 = new BaseService<IOrder>(
-                        "https://localhost:5001/api/v1/Orders",
+                        "https://jakaar.azurewebsites.net/api/v1/Orders",
                         store.state.token ? store.state.token : undefined
                     );
                     service4.getAll().then((data): void => {

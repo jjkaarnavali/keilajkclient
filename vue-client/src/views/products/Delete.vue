@@ -52,7 +52,7 @@ export default class ProductsDelete extends Vue {
 
     async deleteClicked(event: Event): Promise<void> {
         const service = new BaseService<IProduct>(
-            "https://localhost:5001/api/v1/Products",
+            "https://jakaar.azurewebsites.net/api/v1/Products",
             store.state.token ? store.state.token : undefined
         );
 

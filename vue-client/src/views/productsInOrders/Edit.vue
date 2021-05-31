@@ -65,7 +65,7 @@ export default class ProductsInOrdersEdit extends Vue {
 
     async saveClicked(event: Event): Promise<void> {
         const service = new BaseService<IProductInOrder>(
-            "https://localhost:5001/api/v1/ProductsInOrders",
+            "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
             store.state.token ? store.state.token : undefined
         );
 
@@ -92,7 +92,7 @@ export default class ProductsInOrdersEdit extends Vue {
     beforeCreate(): void {
         console.log("beforeCreate");
         const service = new BaseService<IProductInOrder>(
-            "https://localhost:5001/api/v1/ProductsInOrders",
+            "https://jakaar.azurewebsites.net/api/v1/ProductsInOrders",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

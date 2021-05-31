@@ -61,7 +61,7 @@ export default class PaymentTypesDetails extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IPaymentType>(
-            "https://localhost:5001/api/v1/PaymentTypes",
+            "https://jakaar.azurewebsites.net/api/v1/PaymentTypes",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

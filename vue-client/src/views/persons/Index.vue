@@ -69,7 +69,7 @@ export default class PersonsIndex extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IPerson>(
-            "https://localhost:5001/api/v1/Persons",
+            "https://jakaar.azurewebsites.net/api/v1/Persons",
             store.state.token ? store.state.token : undefined
         );
         service.getAll().then((data) => {

@@ -176,7 +176,7 @@ export default class App extends Vue {
     };
 
     private langService = new LangService(
-        "https://localhost:5001/api/v1/lang",
+        "https://jakaar.azurewebsites.net/api/v1/lang",
         store.state.token ? store.state.token : undefined
     );
 

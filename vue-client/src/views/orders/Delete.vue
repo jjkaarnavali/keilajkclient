@@ -48,7 +48,7 @@ export default class OrdersDelete extends Vue {
 
     async deleteClicked(event: Event): Promise<void> {
         const service = new BaseService<IOrder>(
-            "https://localhost:5001/api/v1/Orders",
+            "jakaar.azurewebsites.net/api/v1/Orders",
             store.state.token ? store.state.token : undefined
         );
 
@@ -83,7 +83,7 @@ export default class OrdersDelete extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IOrder>(
-            "https://localhost:5001/api/v1/Orders",
+            "https://jakaar.azurewebsites.net/api/v1/Orders",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

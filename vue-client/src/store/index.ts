@@ -107,7 +107,7 @@ export default createStore({
             const loginDataStr = JSON.stringify(login);
             console.log(loginDataStr);
             const response = await axios.post(
-                'https://localhost:5001/api/v1/Account/login',
+                'https://jakaar.azurewebsites.net/api/v1/Account/login',
                 loginDataStr,
                 { headers: { 'Content-type': 'application/json' } }
             );
@@ -119,7 +119,7 @@ export default createStore({
             const registerDataStr = JSON.stringify(register);
             console.log(registerDataStr);
             const response = await axios.post(
-                'https://localhost:5001/api/v1/Account/register',
+                'https://jakaar.azurewebsites.net/api/v1/Account/register',
                 registerDataStr,
                 { headers: { 'Content-type': 'application/json' } }
             );

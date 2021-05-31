@@ -65,7 +65,7 @@ export default class PricesEdit extends Vue {
 
     async saveClicked(event: Event): Promise<void> {
         const service = new BaseService<IPrice>(
-            "https://localhost:5001/api/v1/Prices",
+            "https://jakaar.azurewebsites.net/api/v1/Prices",
             store.state.token ? store.state.token : undefined
         );
 
@@ -92,7 +92,7 @@ export default class PricesEdit extends Vue {
     beforeCreate(): void {
         console.log("beforeCreate");
         const service = new BaseService<IPrice>(
-            "https://localhost:5001/api/v1/Prices",
+            "https://jakaar.azurewebsites.net/api/v1/Prices",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);

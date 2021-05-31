@@ -45,7 +45,7 @@ export default class ProductTypesCreate extends Vue {
 
     async createClicked(event: Event): Promise<void> {
         const service = new BaseService<IProductType>(
-            "https://localhost:5001/api/v1/ProductTypes",
+            "https://jakaar.azurewebsites.net/api/v1/ProductTypes",
             store.state.token ? store.state.token : undefined
         );
 

@@ -66,7 +66,7 @@ export default class ProductsDetails extends Vue {
     mounted(): void {
         console.log("mounted", store.state.token);
         const service = new BaseService<IProduct>(
-            "https://localhost:5001/api/v1/Products",
+            "https://jakaar.azurewebsites.net/api/v1/Products",
             store.state.token ? store.state.token : undefined
         );
         console.log(this.id);
