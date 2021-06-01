@@ -63,6 +63,7 @@ export default class SelectPersonPageCreate extends Vue {
 
     private state: IState = {
         token: "",
+        isAdmin: false,
         firstname: "",
         lastname: "",
         supportedLanguages: [],

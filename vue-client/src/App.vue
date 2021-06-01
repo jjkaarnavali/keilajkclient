@@ -8,13 +8,14 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                             <li class="nav-item">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">{{state.baseLangResources.commons.home}}</a>
+                                <router-link class="nav-link text-dark" to="/"
+                                >{{state.baseLangResources.commons.home}}</router-link>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" v-if="state.token !== null">
                                 <router-link class="nav-link text-dark" to="/productsPage/Index/"
                                 >{{state.baseLangResources.commons.products}}</router-link>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" v-if="state.token !== null && isAdmin === true">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{state.baseLangResources.commons.shop}}
                                 </a>
@@ -89,7 +90,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Keila JK</h1>
-                <p class="lead fw-normal text-white-50 mb-0">e-pood</p>
+                <p class="lead fw-normal text-white-50 mb-0">{{state.baseLangResources.commons.shop}}</p>
             </div>
         </div>
     </header>
@@ -124,6 +125,7 @@ export default class App extends Vue {
 
     private state: IState = {
         token: "",
+        isAdmin: false,
         firstname: "",
         lastname: "",
         supportedLanguages: [],
@@ -179,6 +181,31 @@ export default class App extends Vue {
         "https://jakaar.azurewebsites.net/api/v1/lang",
         store.state.token ? store.state.token : undefined
     );
+
+    beforeCreate(): void {
+        if (store.state) {
+            this.state = store.state;
+            console.log(this.state);
+            console.log("state updated");
+        }
+        console.log("before checking admin");
+        if (this.state.token !== null && this.state.token !== "") {
+            console.log("checking admin");
+            var token = store.state.token;
+            var base64Url = token!.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            var decodedToken = JSON.parse(jsonPayload);
+            console.log(decodedToken);
+            var userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            if (userRole === "Admin") {
+                this.state.isAdmin = true;
+            }
+        }
+    }
 
     async mounted() {
         await this.langService.getLangResources("/GetLangResources", this.state.currentLanguage.name).then(
@@ -240,6 +267,7 @@ export default class App extends Vue {
     }
 
     logOut(): void {
+        this.state.isAdmin = false;
         store.commit("logOut");
         this.$router.push('/');
     }

@@ -61,6 +61,7 @@ export default class ProductsPageIndex extends Vue {
     productsInOrders: IProductInOrder[] | null = null;
     private state: IState = {
         token: "",
+        isAdmin: false,
         firstname: "",
         lastname: "",
         supportedLanguages: [],
@@ -146,6 +147,7 @@ export default class ProductsPageIndex extends Vue {
                 }
             });
             console.log(activeOrder);
+            console.log(activeOrderId);
 
             if (activeOrder === false) {
                 const objToCreate: IOrder = {

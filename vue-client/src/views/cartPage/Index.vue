@@ -100,6 +100,7 @@ export default class ProductDetailsPageIndex extends Vue {
 
     private state: IState = {
         token: "",
+        isAdmin: false,
         firstname: "",
         lastname: "",
         supportedLanguages: [],
@@ -253,45 +254,47 @@ export default class ProductDetailsPageIndex extends Vue {
                         console.log(this.usersProductsInOrders);
 
                         // Find the products
-                        for (var i = 0, len = this.usersProductsInOrders.length; i < len; i++) {
-                            if (!this.usersProducts) {
-                                this.usersProducts = this.products!.filter(x => x.id === this.usersProductsInOrders![i].productId);
-                            } else {
-                                this.usersProducts!.push(this.products!.filter(x => x.id === this.usersProductsInOrders![i].productId)[0]);
-                            }
+                        if (this.usersProductsInOrders !== null) {
+                            for (var i = 0, len = this.usersProductsInOrders.length; i < len; i++) {
+                                if (!this.usersProducts) {
+                                    this.usersProducts = this.products!.filter(x => x.id === this.usersProductsInOrders![i].productId);
+                                } else {
+                                    this.usersProducts!.push(this.products!.filter(x => x.id === this.usersProductsInOrders![i].productId)[0]);
+                                }
                             // this.usersProducts = this.products!.filter(x => x.id === this.usersProductsInOrders![i].productId);
-                        }
-
-                        console.log("usersProducts");
-                        console.log(this.usersProducts);
-
-                        // Find the prices
-                        for (var s = 0, lengh = this.usersProducts!.length; s < lengh; s++) {
-                            if (!this.usersPrices) {
-                                this.usersPrices = this.prices!.filter(x => x.productId === this.usersProducts![s].id);
-                            } else {
-                                this.usersPrices!.push(this.prices!.filter(x => x.productId === this.usersProducts![s].id)[0]);
                             }
-                            // this.usersPrices = this.prices!.filter(x => x.productId === this.usersProducts![s].id);
-                        }
-                        console.log("this.usersPrices");
-                        console.log(this.usersPrices);
-                        // Find total price
-                        this.totalprice = "0";
-                        console.log("this.totalprice");
-                        console.log(this.totalprice);
-                        this.usersProducts!.forEach(product => {
-                            this.usersPrices!.forEach(price => {
-                                this.usersProductsInOrders!.forEach(productInOrder => {
-                                    if (product.id === price.productId && !price.until && productInOrder.productId === product.id) {
-                                        const priceT = parseInt(this.totalprice!) + parseInt(price.priceInEur) * parseInt(productInOrder.productAmount);
-                                        this.totalprice = priceT.toString();
-                                        console.log(priceT);
-                                        console.log(this.totalprice);
-                                    }
+
+                            console.log("usersProducts");
+                            console.log(this.usersProducts);
+
+                            // Find the prices
+                            for (var s = 0, lengh = this.usersProducts!.length; s < lengh; s++) {
+                                if (!this.usersPrices) {
+                                    this.usersPrices = this.prices!.filter(x => x.productId === this.usersProducts![s].id);
+                                } else {
+                                    this.usersPrices!.push(this.prices!.filter(x => x.productId === this.usersProducts![s].id)[0]);
+                                }
+                                // this.usersPrices = this.prices!.filter(x => x.productId === this.usersProducts![s].id);
+                            }
+                            console.log("this.usersPrices");
+                            console.log(this.usersPrices);
+                            // Find total price
+                            this.totalprice = "0";
+                            console.log("this.totalprice");
+                            console.log(this.totalprice);
+                            this.usersProducts!.forEach(product => {
+                                this.usersPrices!.forEach(price => {
+                                    this.usersProductsInOrders!.forEach(productInOrder => {
+                                        if (product.id === price.productId && !price.until && productInOrder.productId === product.id) {
+                                            const priceT = parseInt(this.totalprice!) + parseInt(price.priceInEur) * parseInt(productInOrder.productAmount);
+                                            this.totalprice = priceT.toString();
+                                            console.log(priceT);
+                                            console.log(this.totalprice);
+                                        }
+                                    });
                                 });
                             });
-                        });
+                        }
                     });
                 });
             });

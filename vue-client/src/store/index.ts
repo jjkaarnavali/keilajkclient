@@ -6,6 +6,7 @@ import { ISupportedLanguage } from './../domain/ISupportedLanguage';
 
 export interface IState {
     token: string | null;
+    isAdmin: boolean;
     firstname: string;
     lastname: string;
     supportedLanguages: ISupportedLanguage[];
@@ -17,6 +18,7 @@ export interface IState {
 
 export const initialState: IState = {
     token: null,
+    isAdmin: false,
     firstname: '',
     lastname: '',
     supportedLanguages: [],
@@ -107,11 +109,12 @@ export default createStore({
             const loginDataStr = JSON.stringify(login);
             console.log(loginDataStr);
             const response = await axios.post(
-                'https://jakaar.azurewebsites.net/api/v1/Account/login',
+                'https://jakaar.azurewebsites.net/api/v1/Account/Login',
                 loginDataStr,
                 { headers: { 'Content-type': 'application/json' } }
             );
             if (response.status === 200) {
+                console.log(response);
                 context.commit('logIn', response.data);
             }
         },

@@ -79,6 +79,7 @@ export default class PurchasePageIndex extends Vue {
 
     private state: IState = {
         token: "",
+        isAdmin: false,
         firstname: "",
         lastname: "",
         supportedLanguages: [],
