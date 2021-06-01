@@ -7,7 +7,7 @@ export class IdentityRegister {
   //AccountService
 
     private service: AccountService =
-        new AccountService("https://localhost:5001/api/v1/Account/register", this.httpClient);
+        new AccountService("https://jakaar.azurewebsites.net/api/v1/Account/register", this.httpClient);
 
     private email: string;
     private password: string;

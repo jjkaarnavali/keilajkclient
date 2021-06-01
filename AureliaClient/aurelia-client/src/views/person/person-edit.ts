@@ -8,7 +8,7 @@ export class PersonEdit implements IRouteViewModel {
     //https://localhost:5001/api/v1/Persons/id_of_entity 
 
     private service: BaseService<IPersonEdit> =
-        new BaseService<IPersonEdit>("https://localhost:5001/api/v1/Persons", this.httpClient, this.state.token);
+        new BaseService<IPersonEdit>("https://jakaar.azurewebsites.net/api/v1/Persons", this.httpClient, this.state.token);
 
 
     private data: IPersonEdit;

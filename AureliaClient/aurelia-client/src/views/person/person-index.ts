@@ -6,7 +6,7 @@ import { AppState } from '../../state/app-state';
 
 export class PersonIndex {
     private service: BaseService<IPerson> = 
-        new BaseService<IPerson>("https://localhost:5001/api/v1/Persons", this.httpClient);
+        new BaseService<IPerson>("https://jakaar.azurewebsites.net/api/v1/Persons", this.httpClient);
 
     
     private data: IPerson[] = [];

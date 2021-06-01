@@ -26,6 +26,7 @@ module.exports = function(env, { analyze }) {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
+      publicPath: '/au/',
       filename: production ? '[name].[contenthash].bundle.js' : '[name].bundle.js'
     },
     resolve: {
@@ -49,7 +50,7 @@ module.exports = function(env, { analyze }) {
       ]
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: 'index.html' }),
+      new HtmlWebpackPlugin({ template: 'index.html', base: production ? '/au/' : '/' }),
       analyze && new BundleAnalyzerPlugin()
     ].filter(p => p)
   }
