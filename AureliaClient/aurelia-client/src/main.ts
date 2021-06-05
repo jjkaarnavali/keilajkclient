@@ -1,5 +1,4 @@
-import Aurelia from 'aurelia';
-import { RouterConfiguration } from 'aurelia-direct-router';
+import Aurelia, { RouterConfiguration } from 'aurelia';
 import { MyApp } from './my-app';
 
 import 'jquery';

@@ -1,0 +1,41 @@
+<h1>Answers</h1>
+
+<a load="/answer-create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                questionId
+            </th>
+            <th>
+                answerText
+            </th>
+            <th>
+                isCorrect
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr repeat.for="item of data">
+            <td>
+                ${item.questionId}
+            </td>
+            <td>
+                ${item.answerText}
+            </td>
+            <td>
+                ${item.isCorrect}
+            </td>
+            <td>
+                <a load="/answer-details(${item.id})">Details</a>
+                <template if.bind="state.token != null">
+                    | 
+                    <a load="/answer-edit(${item.id})">Edit</a> | 
+                    <a load="/answer-delete(${item.id})">Delete</a>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>
