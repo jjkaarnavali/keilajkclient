@@ -4,14 +4,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="my-4">Categories</h1>
-                <div class="list-group" repeat.for="category of categories">
-                    <a load="/select-index(${category.id})" class="list-group-item">${category.categoryName}</a>
+                <div class="list-group" >
+                    <a repeat.for="category of categories" load="/select-index(${category.id})" class="list-group-item">${category.categoryName}</a>
                 </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <br>
-                <div class="row" repeat.for="quiz of quizzes">
-                    <div class="col-lg-4 col-md-6 mb-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4" repeat.for="quiz of quizzes">
                         <div class="card h-100">
                             <div class="card-body">
                                 <h3 class="card-title">
@@ -20,13 +20,13 @@
                                 <p>
                                     ${quiz.description}
                                 </p>
-                                <p show.bind="quiz.categoryName !== 'Poll'">
-                                    <h4>Average score: ${quiz.averageScore}%</h4>
-                                    <h4>Times played: ${quiz.timesPlayed}</h4>
-                                </p>
+                                
+                                <h4 show.bind="quiz.categoryName == 'Quiz'">Average score: ${quiz.averageScore}%</h4>
+                                <h4 show.bind="quiz.categoryName == 'Quiz'">Times played: ${quiz.timesPlayed}</h4>
+
                             </div>
                             <div class="card-footer">
-                                <a asp-action="Play" class="btn btn-primary" asp-route-id="@item.Id">Play</a>
+                                <a load="/select-play(${quiz.id})" class="btn btn-primary">Play</a>
                             </div>
                         </div>
                     </div>

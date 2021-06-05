@@ -30,6 +30,7 @@ export class SelectIndex implements IRouteViewModel {
             this.categories = responseCategory.data;
         }
         console.log(this.categories);
+        console.log(this.quizzes);
     }
 
     async load(parameters) {
@@ -39,6 +40,7 @@ export class SelectIndex implements IRouteViewModel {
         if (response.data) {
             this.quizzes = response.data.filter(x => x.categoryId === parameters[0]);
         }
+        
 
     }
 }
