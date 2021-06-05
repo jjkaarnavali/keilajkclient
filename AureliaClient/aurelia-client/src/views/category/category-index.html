@@ -1,0 +1,29 @@
+<h1>Categories</h1>
+
+<a load="/category-create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Category
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr repeat.for="item of data">
+            <td>
+                ${item.categoryName}
+            </td>
+            <td>
+                <a load="/category-details(${item.id})">Details</a>
+                <template if.bind="state.token != null">
+                    | 
+                    <a load="/category-edit(${item.id})">Edit</a> | 
+                    <a load="/category-delete(${item.id})">Delete</a>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>
