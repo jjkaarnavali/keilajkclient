@@ -52,23 +52,15 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="person-index">Persons</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="answer-index">Answers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="category-index">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="game-index">Games</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="question-index">Questions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" load="quiz-index">Quizzes</a>
+                    <li class="nav-item dropdown" show.bind="state.isAdmin === true">
+                        <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                            <a class="dropdown-item text-dark" load="answer-index">Answers</a>
+                            <a class="dropdown-item text-dark" load="category-index">Categories</a>
+                            <a class="dropdown-item text-dark" load="question-index">Questions</a>
+                            <a class="dropdown-item text-dark" load="quiz-index">Quizzes</a>
+                        </div>
                     </li>
 
                 </ul>

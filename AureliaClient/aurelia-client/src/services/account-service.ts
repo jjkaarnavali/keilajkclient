@@ -47,12 +47,12 @@ export class AccountService {
 
     }
 
-    async register(email: string, password: string, firstname: string, lastname: string, userlevel: string): Promise<IFetchResponse<IJwt | IMessage>> {
+    async register(email: string, password: string, firstname: string, lastname: string): Promise<IFetchResponse<IJwt | IMessage>> {
         let url = this.apiEndpointUrl;
 
 
         try {
-            let body = {email, password, firstname, lastname, userlevel};
+            let body = {email, password, firstname, lastname};
             let bodyStr = JSON.stringify(body);
             console.log(bodyStr);
 
