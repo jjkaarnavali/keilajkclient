@@ -1,0 +1,35 @@
+<h1>Questions</h1>
+
+<a load="/question-create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Quiz Id
+            </th>
+            <th>
+                Question
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr repeat.for="item of data">
+            <td>
+                ${item.quizId}
+            </td>
+            <td>
+                ${item.questionText}
+            </td>
+            <td>
+                <a load="/question-details(${item.id})">Details</a>
+                <template if.bind="state.token != null">
+                    | 
+                    <a load="/question-edit(${item.id})">Edit</a> | 
+                    <a load="/question-delete(${item.id})">Delete</a>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+<h1>Create</h1>
+
+<h4>Question</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="quizId"></label>
+            <select value.bind="data.quizId" class="form-control">
+                <option repeat.for="quiz of quizzes"
+                model.bind="quiz.id">
+                    ${quiz.name}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="questionText">Question</label>
+            <input value.bind="data.questionText" class="form-control" type="text" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" click.delegate="createQuestion($event)"/>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a load="/question-index">Back to List</a>
+</div>

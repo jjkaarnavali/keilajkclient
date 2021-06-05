@@ -1,4 +1,4 @@
-export interface IAnswer {
+export interface IQuiz {
     id: string;
     categoryId: string;
     categoryName: string;
