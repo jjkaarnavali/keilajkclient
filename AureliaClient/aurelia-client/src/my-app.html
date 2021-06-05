@@ -42,6 +42,8 @@
 <import from="./views/quiz/quiz-delete" />
 <import from="./views/quiz/quiz-create" />
 
+<import from="./views/select/select-index" />
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -51,6 +53,9 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" load="select-index">Play quiz!</a>
+                    </li>
 
                     <li class="nav-item dropdown" show.bind="state.isAdmin === true">
                         <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
