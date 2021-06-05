@@ -31,6 +31,7 @@ export class MyApp {
     this.state.token = null;
     this.state.firstname = null;
     this.state.lastname = null;
+    this.state.isAdmin = false;
 
     await this.router.load('/home-index');
   }
