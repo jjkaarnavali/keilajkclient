@@ -1,0 +1,11 @@
+<div show.bind="quiz.categoryName == 'Quiz'">
+    <h4>Your score: ${game.score}%</h4>
+    <h4>Average score: ${quiz.averageScore}%</h4>
+</div>
+<div show.bind="quiz.categoryName == 'Poll'">
+    <h2>Thanks for participating in the poll!</h2>
+</div>
+
+<div>
+    <a load="/select-index">Back to List</a>
+</div>

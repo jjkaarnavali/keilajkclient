@@ -48,6 +48,7 @@ export class QuizEdit implements IRouteViewModel {
             timesPlayed: this.data.timesPlayed
         };
 
+        console.log(objToSave);
         let response = await this.service.put(objToSave);
 
         console.log(response);

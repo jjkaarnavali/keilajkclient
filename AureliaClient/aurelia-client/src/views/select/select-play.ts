@@ -1,5 +1,5 @@
 import { BaseService } from './../../services/base-service';
-import { HttpClient, IRouteViewModel  } from "aurelia";
+import { HttpClient, IRouteViewModel, IRouter } from "aurelia";
 import { IQuiz } from '../../domain/IQuiz';
 import { IGame } from '../../domain/IGame';
 import { IAnswer } from '../../domain/IAnswer';
@@ -21,12 +21,13 @@ export class SelectPlay implements IRouteViewModel {
     
     private quiz: IQuiz;
     private game: IGame;
+    private games: IGame[] = [];
     private questions: IQuestion[] = [];
     private answers: IAnswer[] = [];
     private answersToQuestions: IAnswer[] = [];
     private chosenAnswers: IAnswer[] = [];
 
-    constructor(protected httpClient: HttpClient, private state: AppState){
+    constructor(protected httpClient: HttpClient, private state: AppState, @IRouter private router: IRouter){
 
     }
 
@@ -79,7 +80,7 @@ export class SelectPlay implements IRouteViewModel {
 
         let score = (correctAnswers / totalAnswers) * 100;
         
-        this.quiz.averageScore = (this.quiz.averageScore * this.quiz.timesPlayed + score) / (this.quiz.timesPlayed + 1);
+        this.quiz.averageScore = Math.round((this.quiz.averageScore * this.quiz.timesPlayed + score) / (this.quiz.timesPlayed + 1));
         this.quiz.timesPlayed++;
         /*this.game.quizId = this.quiz.id;
         this.game.score = score;*/
@@ -104,5 +105,16 @@ export class SelectPlay implements IRouteViewModel {
         
         let gameResponse = await this.gameService.post(gameToCreate);
 
+        let gameResponse2 = await this.gameService.getAll();
+        if (gameResponse2.data) {
+            this.games = gameResponse2.data;
+        }
+        this.games.forEach(game => {
+            if(game.quizId === this.quiz.id && game.score === score){
+                this.game = game;
+            }
+        });
+
+        await this.router.load(`/select-score(${this.quiz.id},${this.game.id})`);
     }
 }
