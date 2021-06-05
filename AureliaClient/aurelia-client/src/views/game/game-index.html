@@ -1,0 +1,35 @@
+<h1>Games</h1>
+
+<a load="/game-create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Quiz ID
+            </th>
+            <th>
+                Score
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr repeat.for="item of data">
+            <td>
+                ${item.quizId}
+            </td>
+            <td>
+                ${item.score}
+            </td>
+            <td>
+                <a load="/game-details(${item.id})">Details</a>
+                <template if.bind="state.token != null">
+                    | 
+                    <a load="/game-edit(${item.id})">Edit</a> | 
+                    <a load="/game-delete(${item.id})">Delete</a>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>
